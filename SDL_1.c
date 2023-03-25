@@ -51,6 +51,7 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 		// Interact with keyboard
 		if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
+			case SDLK_SPACE:
 			case SDLK_UP:
 			case SDLK_w:
 				if (gameState->player.onLedge) {
@@ -64,6 +65,7 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 }
 
 void load_game(GameState* gameState) {
+	srand(time(NULL));
 	// Init GameState 
 	gameState->label = NULL;
 	gameState->player.x = 220;
@@ -165,15 +167,29 @@ void load_game(GameState* gameState) {
 		exit(1);
 	}
 	// init ledges
-	for (int i = 0; i < NUM_OF_LEDGES; i++) {
-		gameState->ledges[i].w = WIDTH_PLATFORM_1;
-		gameState->ledges[i].h = HEIGHT_PLATFORM_1;
-		gameState->ledges[i].x = i * WIDTH_PLATFORM_1;
-		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_1;
+	int temp = rand() % 5 + 3;
+	gameState->ledges[0].w = WIDTH_PLATFORM_3;
+	gameState->ledges[0].h = HEIGHT_PLATFORM_3;
+	gameState->ledges[0].x = 0;
+	gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
+	for (int i = 1; i < NUM_OF_LEDGES; i++) {
+		if (i % temp == 0) {
+			int additionalDis = 0;
+			do {
+				additionalDis = rand() % 350;
+			} while (additionalDis < 200);
+			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
+		}
+		else {
+			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3;
+		}
+		gameState->ledges[i].w = WIDTH_PLATFORM_3;
+		gameState->ledges[i].h = HEIGHT_PLATFORM_3;
+		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
 	}
 	gameState->ledges[NUM_OF_LEDGES - 1].x = 800;
 	gameState->ledges[NUM_OF_LEDGES - 1].y = 400;
-	gameState->ledges[NUM_OF_LEDGES - 2].x = 800 + WIDTH_PLATFORM_1;
+	gameState->ledges[NUM_OF_LEDGES - 2].x = 800 + WIDTH_PLATFORM_3;
 	gameState->ledges[NUM_OF_LEDGES - 2].y = 400;
 }
 
@@ -185,34 +201,34 @@ void do_render(GameState* gameState) {
 	}
 	// draw ledges
 	for (int i = 0; i < NUM_OF_LEDGES; i++) {
-		SDL_Rect srcRect = { 341, 172, gameState->ledges[i].w, gameState->ledges[i].h };
+		SDL_Rect srcRect = { 217, 116, gameState->ledges[i].w, gameState->ledges[i].h };
 		SDL_Rect ledgeRect = { gameState->scrollX + gameState->ledges[i].x, gameState->ledges[i].y , gameState->ledges[i].w, gameState->ledges[i].h };
-		SDL_RenderCopyEx(renderer, gameState->platform[0], &srcRect, &ledgeRect, 0, NULL, 0);
+		SDL_RenderCopyEx(renderer, gameState->platform[2], &srcRect, &ledgeRect, 0, NULL, 0);
 	}
 	if (gameState->player.status == 0) { // idle 
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_IDLE, HEIGHT_PLAYER_IDLE };
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_IDLE*2, HEIGHT_PLAYER_IDLE*2};
 		// animation smoothness
 		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 12;
 		SDL_RenderCopyEx(renderer, gameState->idle_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
 	else if (gameState->player.status == 1) { // run
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_RUN, HEIGHT_PLAYER_RUN };
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_RUN * 2, HEIGHT_PLAYER_RUN * 2 };
 		// animation smoothness
 		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 8;
 		SDL_RenderCopyEx(renderer, gameState->run_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
 	else if (gameState->player.status == 2) { // jump
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP };
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
 		SDL_RenderCopyEx(renderer, gameState->jump_anim[0], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
 	else if (gameState->player.status == 3) { // mid air
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP };
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
 		SDL_RenderCopyEx(renderer, gameState->jump_anim[1], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
 	else if (gameState->player.status == 4) { // falling
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP };
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
 		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 2 + 2;
 		SDL_RenderCopyEx(renderer, gameState->jump_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
@@ -248,18 +264,18 @@ void collision_detect(GameState* gameState) {
 	// prevent from falling out the window
 	// check for collision with any ledges (brick blocks)
 	for (int i = 0; i < NUM_OF_LEDGES; i++) {
-		float pw = WIDTH_PLAYER_IDLE, ph = HEIGHT_PLAYER_IDLE;
+		float pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
 		if (gameState->player.status == 0) {
-			pw = WIDTH_PLAYER_IDLE, ph = HEIGHT_PLAYER_IDLE;
+			pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
 		}
 		else if (gameState->player.status == 1) {
-			pw = WIDTH_PLAYER_IDLE, ph = HEIGHT_PLAYER_IDLE;
+			pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
 		} 
 		else if (gameState->player.status == 2 || gameState->player.status == 3 || gameState->player.status == 4 ) {
-			pw = WIDTH_PLAYER_JUMP, ph = HEIGHT_PLAYER_JUMP;
+			pw = WIDTH_PLAYER_JUMP*2, ph = HEIGHT_PLAYER_JUMP*2;
 		}
 		else if (gameState->player.status == 5) {
-			pw = WIDTH_PLAYER_LEDGEGRAB, ph = HEIGHT_PLAYER_LEDGEGRAB;
+			pw = WIDTH_PLAYER_LEDGEGRAB*2, ph = HEIGHT_PLAYER_LEDGEGRAB*2;
 		}
 		float px = gameState->player.x, py = gameState->player.y;
 		float bw = gameState->ledges[i].w, bh = gameState->ledges[i].h, bx = gameState->ledges[i].x, by = gameState->ledges[i].y;
