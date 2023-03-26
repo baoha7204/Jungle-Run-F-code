@@ -10,12 +10,13 @@ typedef struct {
 } Object;
 
 typedef struct {
-	int x, y, w, h;
+	float x, y, w, h;
 } Ledge;
 
 typedef struct {
 	float x, y; // x, y position to start drawing map
-	int pos[MAP_HEIGHT][MAP_WIDTH];
+	int pos[MAP_HEIGHT][MAP_WIDTH]; // tilesmap
+	Ledge ledges[MAP_HEIGHT][MAP_WIDTH];
 } Map;
 
 typedef struct {

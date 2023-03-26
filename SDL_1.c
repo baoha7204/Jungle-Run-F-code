@@ -174,22 +174,23 @@ void load_game(GameState* gameState) {
 	gameState->ledges[0].x = 0;
 	gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
 	for (int i = 1; i < NUM_OF_LEDGES; i++) {
+		int additionalDis = 0;
 		if (i % temp == 0) {
 			// load Map
-			loadMap(gameState, lv1, gameState->ledges[i - 1].x);
+			loadMap(gameState, lv1, gameState->ledges[i - 1].x, 0);
 			/*int additionalDis = 0;
 			do {
 				additionalDis = rand() % 350;
 			} while (additionalDis < 200);*/
-			int additionalDis = WIDTH_WINDOW;
-			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
+			additionalDis = WIDTH_WINDOW;
 		}
 		else {
-			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3;
+			additionalDis = WIDTH_PLATFORM_3;
 		}
+		gameState->ledges[i].x = gameState->ledges[i - 1].x + additionalDis;
+		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
 		gameState->ledges[i].w = WIDTH_PLATFORM_3;
 		gameState->ledges[i].h = HEIGHT_PLATFORM_3;
-		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
 	}
 }
 
@@ -204,25 +205,20 @@ void do_render(GameState* gameState) {
 	srcRect[0] = (SDL_Rect){ 307,246,108,28 };
 	srcRect[1] = (SDL_Rect){ 414, 175, 54, 99 };
 	srcRect[2] = (SDL_Rect){ 467, 246, 68, 28 };*/
-	// draw ledges
-	for (int i = 0; i < NUM_OF_LEDGES; i++) {
-		SDL_Rect srcRect = { 217, 116, gameState->ledges[i].w, gameState->ledges[i].h };
-		SDL_Rect ledgeRect = { gameState->scrollX + gameState->ledges[i].x, gameState->ledges[i].y , gameState->ledges[i].w, gameState->ledges[i].h };
-		SDL_RenderCopyEx(renderer, gameState->platform[2], &srcRect, &ledgeRect, 0, NULL, 0);
-	}
-	// Draw map
+	// draw map
 	drawMap(gameState);
+	// draw ledges
+	drawLedges(gameState);
+	size_t animation_speed = SDL_GetTicks64() / 120;
 	if (gameState->player.status == 0) { // idle 
 		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_IDLE*2, HEIGHT_PLAYER_IDLE*2};
 		// animation smoothness
-		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 12;
 		SDL_RenderCopyEx(renderer, gameState->idle_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
 	else if (gameState->player.status == 1) { // run
 		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_RUN * 2, HEIGHT_PLAYER_RUN * 2 };
 		// animation smoothness
-		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 8;
 		SDL_RenderCopyEx(renderer, gameState->run_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}
@@ -236,7 +232,6 @@ void do_render(GameState* gameState) {
 	}
 	else if (gameState->player.status == 4) { // falling
 		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
-		size_t animation_speed = SDL_GetTicks64() / 120;
 		int i = animation_speed % 2 + 2;
 		SDL_RenderCopyEx(renderer, gameState->jump_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
 	}

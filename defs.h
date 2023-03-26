@@ -24,5 +24,5 @@
 #define STATUS_STATE_GAME 1
 #define STATUS_STATE_GAMEOVER 2
 #define MAP_WIDTH 24
-#define MAP_HEIGHT 24
+#define MAP_HEIGHT 16
 #endif // !defs

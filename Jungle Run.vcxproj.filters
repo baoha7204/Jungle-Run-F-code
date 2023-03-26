@@ -40,6 +40,9 @@
     <Filter Include="Resource Files\Fonts">
       <UniqueIdentifier>{23b84e89-fd79-480e-8cc1-18ced2498a04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\map">
+      <UniqueIdentifier>{0acbb85c-88c9-4436-931a-132d1d6b03a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -49,7 +52,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="map.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +66,7 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="map.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
