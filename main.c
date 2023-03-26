@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 	SDL_Renderer* renderer = NULL; // declare a renderer
 	SDL_Init(SDL_INIT_VIDEO); // initialize SDL2
 	// Create an application window with following settings
-	window = SDL_CreateWindow("Test",
+	window = SDL_CreateWindow("Jungle Run",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
 		WIDTH_WINDOW,

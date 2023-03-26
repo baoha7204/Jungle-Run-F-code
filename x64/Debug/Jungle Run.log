@@ -1,3 +1,20 @@
-﻿  test.c
-C:\Users\Admin\source\repos\Jungle Run\test.c(48): warning C4716: 'SDL_main': must return a value
+﻿  SDL_1.c
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(69,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(179,52): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(210,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(216,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(216,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(223,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(223,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(230,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(230,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(234,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(234,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(238,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(238,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(288,34): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(288,63): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(288,92): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(288,121): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\SDL_1.c(66): warning C4715: 'processEvents': not all control paths return a value
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe

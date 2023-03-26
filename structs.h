@@ -1,3 +1,5 @@
+#ifndef structs
+#define structs
 typedef struct {
 	float x, y;
 	float dx, dy;
@@ -10,6 +12,11 @@ typedef struct {
 typedef struct {
 	int x, y, w, h;
 } Ledge;
+
+typedef struct {
+	float x, y; // x, y position to start drawing map
+	int pos[MAP_HEIGHT][MAP_WIDTH];
+} Map;
 
 typedef struct {
 	// Scroll offset
@@ -29,7 +36,7 @@ typedef struct {
 	// Golem
 	SDL_Texture* golem;
 	// Platform
-	SDL_Texture* platform[5];
+	SDL_Texture* platform[6];
 	// Background
 	SDL_Texture* background[5];
 	// Label
@@ -38,4 +45,7 @@ typedef struct {
 	TTF_Font* font;
 	// Renderer
 	SDL_Renderer* renderer;
+	// Map
+	Map map;
 } GameState;
+#endif // !stucts

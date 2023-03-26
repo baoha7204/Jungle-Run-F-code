@@ -1,3 +1,5 @@
+#ifndef defs
+#define defs
 #define WIDTH_WINDOW 1200
 #define HEIGHT_WINDOW 800
 #define WIDTH_PLAYER_IDLE 19
@@ -14,8 +16,13 @@
 #define HEIGHT_PLATFORM_3 159
 #define WIDTH_PLATFORM_5 402
 #define HEIGHT_PLATFORM_5 62
+#define WIDTH_PLATFORM_6 49
+#define HEIGHT_PLATFORM_6 48
 #define NUM_OF_LEDGES 100
 #define GRAVITY 0.12f
 #define STATUS_STATE_LIVES 0
 #define STATUS_STATE_GAME 1
 #define STATUS_STATE_GAMEOVER 2
+#define MAP_WIDTH 24
+#define MAP_HEIGHT 24
+#endif // !defs

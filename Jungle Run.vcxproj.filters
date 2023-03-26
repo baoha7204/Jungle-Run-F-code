@@ -48,7 +48,7 @@
     <ClCompile Include="SDL_1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.c">
+    <ClCompile Include="map.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="structs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -195,6 +198,9 @@
     </Image>
     <Image Include="Resource\Mecha-stone Golem 0.1\weapon PNG\Laser_sheet.png">
       <Filter>Resource Files\Golem</Filter>
+    </Image>
+    <Image Include="Resource\Some Bullshit Platform\Platform 6.png">
+      <Filter>Resource Files\Platform</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

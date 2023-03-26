@@ -135,13 +135,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="map.c" />
     <ClCompile Include="SDL_1.c" />
-    <ClCompile Include="test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="defs.h" />
+    <ClInclude Include="map.h" />
     <ClInclude Include="SDL_1.h" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
@@ -190,6 +191,7 @@
     <Image Include="Resource\Some Bullshit Platform\Platform 4.png" />
     <Image Include="Resource\Some Bullshit Platform\Platform 5.png" />
     <Image Include="Resource\Some Bullshit Platform\Platform 1.png" />
+    <Image Include="Resource\Some Bullshit Platform\Platform 6.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\crazy-pixel.ttf" />

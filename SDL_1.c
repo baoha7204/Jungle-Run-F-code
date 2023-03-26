@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "map.h"
 
 int processEvents(SDL_Window* window, GameState* gameState) {
 	// Walking
@@ -83,7 +84,7 @@ void load_game(GameState* gameState) {
 		// Create character with Idle movement
 	for (int i = 0; i < 12; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Character\\Idle\\Idle_%d.png", i);
+		sprintf_s(str, 128, "Resource\\Character\\Idle\\Idle_%d.png", i);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -95,7 +96,7 @@ void load_game(GameState* gameState) {
 		// Create character with Run movement
 	for (int i = 0; i < 8; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Character\\Run\\Run_%d.png", i);
+		sprintf_s(str, 128, "Resource\\Character\\Run\\Run_%d.png", i);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -107,7 +108,7 @@ void load_game(GameState* gameState) {
 		// Create character with Jump movement
 	for (int i = 0; i < 4; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Character\\Jump\\Jump_%d.png", i);
+		sprintf_s(str, 128, "Resource\\Character\\Jump\\Jump_%d.png", i);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -119,7 +120,7 @@ void load_game(GameState* gameState) {
 		// Create character with ledge grab
 	for (int i = 0; i < 6; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Character\\Ledge Grab\\Ledge Grab_%d.png", i);
+		sprintf_s(str, 128, "Resource\\Character\\Ledge Grab\\Ledge Grab_%d.png", i);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -129,7 +130,7 @@ void load_game(GameState* gameState) {
 		SDL_FreeSurface(surface);
 	}
 	// Create Golem
-	surface = IMG_Load("C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png");
+	surface = IMG_Load("Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png");
 	if (surface == NULL) {
 		SDL_Quit();
 		exit(1);
@@ -139,7 +140,7 @@ void load_game(GameState* gameState) {
 	// Create background
 	for (int i = 0; i < 5; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", i + 1);
+		sprintf_s(str, 128, "Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", i + 1);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -149,9 +150,9 @@ void load_game(GameState* gameState) {
 		SDL_FreeSurface(surface);
 	}
 	// Create platform
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 6; i++) {
 		char str[128] = "";
-		sprintf_s(str, 128, "C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Some Bullshit Platform\\Platform %d.png", i + 1);
+		sprintf_s(str, 128, "Resource\\Some Bullshit Platform\\Platform %d.png", i + 1);
 		surface = IMG_Load(str); // declare a surface = main computer memory
 		if (surface == NULL) {
 			SDL_Quit();
@@ -161,7 +162,7 @@ void load_game(GameState* gameState) {
 		SDL_FreeSurface(surface);
 	}
 	// Load fonts
-	gameState->font = TTF_OpenFont("C:\\Users\\Admin\\source\\repos\\Jungle Run\\Resource\\Fonts\\crazy-pixel.ttf", 48);
+	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {
 		SDL_Quit();
 		exit(1);
@@ -174,10 +175,13 @@ void load_game(GameState* gameState) {
 	gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
 	for (int i = 1; i < NUM_OF_LEDGES; i++) {
 		if (i % temp == 0) {
-			int additionalDis = 0;
+			// load Map
+			loadMap(gameState, lv1, gameState->ledges[i - 1].x);
+			/*int additionalDis = 0;
 			do {
 				additionalDis = rand() % 350;
-			} while (additionalDis < 200);
+			} while (additionalDis < 200);*/
+			int additionalDis = WIDTH_WINDOW;
 			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
 		}
 		else {
@@ -187,10 +191,6 @@ void load_game(GameState* gameState) {
 		gameState->ledges[i].h = HEIGHT_PLATFORM_3;
 		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
 	}
-	gameState->ledges[NUM_OF_LEDGES - 1].x = 800;
-	gameState->ledges[NUM_OF_LEDGES - 1].y = 400;
-	gameState->ledges[NUM_OF_LEDGES - 2].x = 800 + WIDTH_PLATFORM_3;
-	gameState->ledges[NUM_OF_LEDGES - 2].y = 400;
 }
 
 void do_render(GameState* gameState) {
@@ -199,12 +199,19 @@ void do_render(GameState* gameState) {
 	for (int i = 0; i < 5; i++) {
 		SDL_RenderCopy(renderer, gameState->background[i], NULL, NULL);
 	}
+	// draw platform[1]
+	/*SDL_Rect srcRect[3];
+	srcRect[0] = (SDL_Rect){ 307,246,108,28 };
+	srcRect[1] = (SDL_Rect){ 414, 175, 54, 99 };
+	srcRect[2] = (SDL_Rect){ 467, 246, 68, 28 };*/
 	// draw ledges
 	for (int i = 0; i < NUM_OF_LEDGES; i++) {
 		SDL_Rect srcRect = { 217, 116, gameState->ledges[i].w, gameState->ledges[i].h };
 		SDL_Rect ledgeRect = { gameState->scrollX + gameState->ledges[i].x, gameState->ledges[i].y , gameState->ledges[i].w, gameState->ledges[i].h };
 		SDL_RenderCopyEx(renderer, gameState->platform[2], &srcRect, &ledgeRect, 0, NULL, 0);
 	}
+	// Draw map
+	drawMap(gameState);
 	if (gameState->player.status == 0) { // idle 
 		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_IDLE*2, HEIGHT_PLAYER_IDLE*2};
 		// animation smoothness
