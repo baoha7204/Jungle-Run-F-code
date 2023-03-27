@@ -77,8 +77,9 @@ void load_game(GameState* gameState) {
 	gameState->player.status = 0;
 	gameState->player.onLedge = 0;
 	gameState->statusState = STATUS_STATE_LIVES;
-	gameState->player.lives = 3;
+	gameState->player.lives = 2;
 	gameState->scrollX = 0;
+	gameState->map_1->counter = 0;
 	// Load images and create rendering pictures from them
 	SDL_Surface* surface;
 		// Create character with Idle movement
@@ -150,7 +151,7 @@ void load_game(GameState* gameState) {
 		SDL_FreeSurface(surface);
 	}
 	// Create platform
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 5; i++) {
 		char str[128] = "";
 		sprintf_s(str, 128, "Resource\\Some Bullshit Platform\\Platform %d.png", i + 1);
 		surface = IMG_Load(str); // declare a surface = main computer memory
@@ -161,6 +162,14 @@ void load_game(GameState* gameState) {
 		gameState->platform[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
 		SDL_FreeSurface(surface);
 	}
+		// Platform[5]
+	surface = IMG_Load("Resource\\Jungle Asset Pack\\jungle tileset\\jungle tileset.png");
+	if (surface == NULL) {
+		SDL_Quit();
+		exit(1);
+	}
+	gameState->platform[5] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+	SDL_FreeSurface(surface);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {
@@ -176,18 +185,15 @@ void load_game(GameState* gameState) {
 	for (int i = 1; i < NUM_OF_LEDGES; i++) {
 		int additionalDis = 0;
 		if (i % temp == 0) {
-			// load Map
-			loadMap(gameState, lv1, gameState->ledges[i - 1].x, 0);
+			Map* map = &gameState->map_1;
+			loadMap(&map[map->counter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 			/*int additionalDis = 0;
 			do {
 				additionalDis = rand() % 350;
 			} while (additionalDis < 200);*/
 			additionalDis = WIDTH_WINDOW;
 		}
-		else {
-			additionalDis = WIDTH_PLATFORM_3;
-		}
-		gameState->ledges[i].x = gameState->ledges[i - 1].x + additionalDis;
+		gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
 		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
 		gameState->ledges[i].w = WIDTH_PLATFORM_3;
 		gameState->ledges[i].h = HEIGHT_PLATFORM_3;
@@ -200,13 +206,11 @@ void do_render(GameState* gameState) {
 	for (int i = 0; i < 5; i++) {
 		SDL_RenderCopy(renderer, gameState->background[i], NULL, NULL);
 	}
-	// draw platform[1]
-	/*SDL_Rect srcRect[3];
-	srcRect[0] = (SDL_Rect){ 307,246,108,28 };
-	srcRect[1] = (SDL_Rect){ 414, 175, 54, 99 };
-	srcRect[2] = (SDL_Rect){ 467, 246, 68, 28 };*/
-	// draw map
-	drawMap(gameState);
+	// draw Map
+	for (int i = 0; i < gameState->map_1->counter; i++) {
+		// draw map
+		drawMap(gameState, gameState->map_1[i]);
+	}
 	// draw ledges
 	drawLedges(gameState);
 	size_t animation_speed = SDL_GetTicks64() / 120;
@@ -262,66 +266,92 @@ void add_physics(GameState* gameState) {
 	}
 }
 
-void collision_detect(GameState* gameState) {
+void collision_detect_floor(GameState* gameState) {
 	// prevent from falling out the window
 	// check for collision with any ledges (brick blocks)
 	for (int i = 0; i < NUM_OF_LEDGES; i++) {
-		float pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
-		if (gameState->player.status == 0) {
-			pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
-		}
-		else if (gameState->player.status == 1) {
-			pw = WIDTH_PLAYER_IDLE*2, ph = HEIGHT_PLAYER_IDLE*2;
-		} 
-		else if (gameState->player.status == 2 || gameState->player.status == 3 || gameState->player.status == 4 ) {
-			pw = WIDTH_PLAYER_JUMP*2, ph = HEIGHT_PLAYER_JUMP*2;
-		}
-		else if (gameState->player.status == 5) {
-			pw = WIDTH_PLAYER_LEDGEGRAB*2, ph = HEIGHT_PLAYER_LEDGEGRAB*2;
-		}
-		float px = gameState->player.x, py = gameState->player.y;
+		float px, py, pw, ph;
+		load_player_info(gameState, &px, &py, &pw, &ph);
 		float bw = gameState->ledges[i].w, bh = gameState->ledges[i].h, bx = gameState->ledges[i].x, by = gameState->ledges[i].y;
+		collision_correction(gameState, px, py, pw, ph, bx, by, bw, bh);
+	}
+}
 
-		if (py + ph / 2 > by && py < by + bh) {
-			//rubbing against right edge 
-			if (px< (bx + bw) && (px + pw)>(bx + bw) && gameState->player.dx < 0) {
-				// correct x
-				gameState->player.x = bx + bw;
-				px = bx + bw;
-
-				gameState->player.dx = 0;
-			}
-			else if ((px + pw) > bx && px < bx && gameState->player.dx > 0) {
-				// correct x
-				gameState->player.x = bx - pw;
-				px = bx - pw;
-
-				gameState->player.dx = 0;
-			}
-		}
-		if (px + pw / 2 > bx && px + pw / 2 < bx + bw) {
-			// are we bumping our head?
-			if (py < (by + bh) && py > by && gameState->player.dy < 0) {
-				// correct y
-				gameState->player.y = by + bh;
-				py = by + bh;
-
-				// stop any jump velocity
-				gameState->player.dy = 0;
-				//	gameState->player.onLedge = 1;
-			}
-		}
-		// landed on ledge?
-		if (px + pw > bx && px < bx + bw) {
-			if (py + ph > by && py < by && gameState->player.dy > 0) {
-				// correct y
-				gameState->player.y = by - ph;
-				py = by - ph;
-
-				// stop any jump velocity
-				gameState->player.dy = 0;
-				gameState->player.onLedge = 1;
+void collision_detect_map(GameState* gameState, Map* map) {
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			if (map->pos[i][j] != 0) {
+				float px, py, pw, ph;
+				load_player_info(gameState, &px, &py, &pw, &ph);
+				float bw = map->ledges[i][j].w, bh = map->ledges[i][j].h, bx = map->ledges[i][j].x, by = map->ledges[i][j].y;
+				switch (map->pos[i][j]) {
+				case 3:
+					bw = map->ledges[i][j].w * 3;
+					break;
+				case 4:
+					bw = WIDTH_PLATFORM_3;
+					bh = HEIGHT_PLATFORM_3;
+					break;
+				}
+				collision_correction(gameState, px, py, pw, ph, bx, by, bw, bh);
 			}
 		}
 	}
+}
+
+void collision_correction(GameState* gameState, float px, float py, float pw, float ph, float bx, float by, float bw, float bh) {
+	if (py + ph / 2 > by && py < by + bh) {
+		//rubbing against right edge 
+		if (px< (bx + bw) && (px + pw)>(bx + bw) && gameState->player.dx < 0) {
+			// correct x
+			gameState->player.x = bx + bw;
+
+			gameState->player.dx = 0;
+		}
+		else if ((px + pw) > bx && px < bx && gameState->player.dx > 0) {
+			// correct x
+			gameState->player.x = bx - pw;
+
+			gameState->player.dx = 0;
+		}
+	}
+	if (px + pw / 2 > bx && px + pw / 2 < bx + bw) {
+		// are we bumping our head?
+		if (py < (by + bh) && py > by && gameState->player.dy < 0) {
+			// correct y
+			gameState->player.y = by + bh;
+
+			// stop any jump velocity
+			gameState->player.dy = 0;
+			//	gameState->player.onLedge = 1;
+		}
+	}
+	// landed on ledge?
+	if (px + pw > bx && px < bx + bw) {
+		if (py + ph > by && py < by && gameState->player.dy > 0) {
+			// correct y
+			gameState->player.y = by - ph;
+
+			// stop any jump velocity
+			gameState->player.dy = 0;
+			gameState->player.onLedge = 1;
+		}
+	}
+}
+
+void load_player_info(GameState* gameState, float* px, float* py, float* pw, float* ph) {
+	*pw = WIDTH_PLAYER_IDLE * 2, *ph = HEIGHT_PLAYER_IDLE * 2;
+	if (gameState->player.status == 0) {
+		*pw = WIDTH_PLAYER_IDLE * 2, *ph = HEIGHT_PLAYER_IDLE * 2;
+	}
+	else if (gameState->player.status == 1) {
+		*pw = WIDTH_PLAYER_IDLE * 2, *ph = HEIGHT_PLAYER_IDLE * 2;
+	}
+	else if (gameState->player.status == 2 || gameState->player.status == 3 || gameState->player.status == 4) {
+		*pw = WIDTH_PLAYER_JUMP * 2, *ph = HEIGHT_PLAYER_JUMP * 2;
+	}
+	else if (gameState->player.status == 5) {
+		*pw = WIDTH_PLAYER_LEDGEGRAB * 2, *ph = HEIGHT_PLAYER_LEDGEGRAB * 2;
+	}
+	*px = gameState->player.x, *py = gameState->player.y;
 }

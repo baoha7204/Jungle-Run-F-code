@@ -24,13 +24,18 @@ int main(int argc, char* argv[]) {
 	while (!done) {
 		done = processEvents(window, &gameState);
 
-		collision_detect(&gameState);
+		// detect ground floor (platform[2])
+		collision_detect_floor(&gameState);
+
+		// detect map
+		for (int i = 0; i < gameState.map_1->counter; i++) {
+			collision_detect_map(&gameState, &gameState.map_1[i]);
+		}
 
 		add_physics(&gameState);
 
 		do_render(&gameState);
 
-		//	SDL_Delay(10);
 	}
 
 	// Close and destroy the window

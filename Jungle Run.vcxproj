@@ -191,7 +191,6 @@
     <Image Include="Resource\Some Bullshit Platform\Platform 4.png" />
     <Image Include="Resource\Some Bullshit Platform\Platform 5.png" />
     <Image Include="Resource\Some Bullshit Platform\Platform 1.png" />
-    <Image Include="Resource\Some Bullshit Platform\Platform 6.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\crazy-pixel.ttf" />

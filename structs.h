@@ -14,7 +14,8 @@ typedef struct {
 } Ledge;
 
 typedef struct {
-	float x, y; // x, y position to start drawing map
+	float x, y;// x, y position to start drawing map
+	int counter; // number of maps created actually
 	int pos[MAP_HEIGHT][MAP_WIDTH]; // tilesmap
 	Ledge ledges[MAP_HEIGHT][MAP_WIDTH];
 } Map;
@@ -47,6 +48,6 @@ typedef struct {
 	// Renderer
 	SDL_Renderer* renderer;
 	// Map
-	Map map;
+	Map map_1[100];
 } GameState;
 #endif // !stucts

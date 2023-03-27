@@ -202,9 +202,6 @@
     <Image Include="Resource\Mecha-stone Golem 0.1\weapon PNG\Laser_sheet.png">
       <Filter>Resource Files\Golem</Filter>
     </Image>
-    <Image Include="Resource\Some Bullshit Platform\Platform 6.png">
-      <Filter>Resource Files\Platform</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resource\Fonts\crazy-pixel.ttf">
