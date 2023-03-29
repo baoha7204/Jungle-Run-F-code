@@ -70,9 +70,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\Character\Idle\Idle_0.png">
-      <Filter>Resource Files\Character animation\Idle</Filter>
-    </Image>
     <Image Include="Resource\Character\Idle\Idle_1.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
@@ -85,13 +82,13 @@
     <Image Include="Resource\Character\Idle\Idle_4.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
-    <Image Include="Resource\Character\Idle\Idle_6.png">
-      <Filter>Resource Files\Character animation\Idle</Filter>
-    </Image>
     <Image Include="Resource\Character\Idle\Idle_5.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
     <Image Include="Resource\Character\Idle\Idle_7.png">
+      <Filter>Resource Files\Character animation\Idle</Filter>
+    </Image>
+    <Image Include="Resource\Character\Idle\Idle_6.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
     <Image Include="Resource\Character\Idle\Idle_8.png">
@@ -100,10 +97,13 @@
     <Image Include="Resource\Character\Idle\Idle_9.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
-    <Image Include="Resource\Character\Idle\Idle_11.png">
+    <Image Include="Resource\Character\Idle\Idle_10.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
-    <Image Include="Resource\Character\Idle\Idle_10.png">
+    <Image Include="Resource\Character\Idle\Idle_12.png">
+      <Filter>Resource Files\Character animation\Idle</Filter>
+    </Image>
+    <Image Include="Resource\Character\Idle\Idle_11.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
     </Image>
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_0.png">
@@ -124,9 +124,6 @@
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_5.png">
       <Filter>Resource Files\Character animation\Ledge Grab</Filter>
     </Image>
-    <Image Include="Resource\Character\Jump\Jump_0.png">
-      <Filter>Resource Files\Character animation\Jump</Filter>
-    </Image>
     <Image Include="Resource\Character\Jump\Jump_1.png">
       <Filter>Resource Files\Character animation\Jump</Filter>
     </Image>
@@ -136,8 +133,8 @@
     <Image Include="Resource\Character\Jump\Jump_3.png">
       <Filter>Resource Files\Character animation\Jump</Filter>
     </Image>
-    <Image Include="Resource\Character\Run\Run_0.png">
-      <Filter>Resource Files\Character animation\Run</Filter>
+    <Image Include="Resource\Character\Jump\Jump_4.png">
+      <Filter>Resource Files\Character animation\Jump</Filter>
     </Image>
     <Image Include="Resource\Character\Run\Run_1.png">
       <Filter>Resource Files\Character animation\Run</Filter>
@@ -158,6 +155,9 @@
       <Filter>Resource Files\Character animation\Run</Filter>
     </Image>
     <Image Include="Resource\Character\Run\Run_7.png">
+      <Filter>Resource Files\Character animation\Run</Filter>
+    </Image>
+    <Image Include="Resource\Character\Run\Run_8.png">
       <Filter>Resource Files\Character animation\Run</Filter>
     </Image>
     <Image Include="Resource\Jungle Asset Pack\parallax background\plx-1.png">

@@ -110,7 +110,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>
@@ -147,11 +147,10 @@
     <ClInclude Include="structs.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\Character\Idle\Idle_0.png" />
     <Image Include="Resource\Character\Idle\Idle_1.png" />
-    <Image Include="Resource\Character\Idle\Idle_10.png" />
-    <Image Include="Resource\Character\Idle\Idle_11.png" />
     <Image Include="Resource\Character\Idle\Idle_2.png" />
+    <Image Include="Resource\Character\Idle\Idle_11.png" />
+    <Image Include="Resource\Character\Idle\Idle_12.png" />
     <Image Include="Resource\Character\Idle\Idle_3.png" />
     <Image Include="Resource\Character\Idle\Idle_4.png" />
     <Image Include="Resource\Character\Idle\Idle_5.png" />
@@ -159,17 +158,17 @@
     <Image Include="Resource\Character\Idle\Idle_7.png" />
     <Image Include="Resource\Character\Idle\Idle_8.png" />
     <Image Include="Resource\Character\Idle\Idle_9.png" />
-    <Image Include="Resource\Character\Jump\Jump_0.png" />
+    <Image Include="Resource\Character\Idle\Idle_10.png" />
     <Image Include="Resource\Character\Jump\Jump_1.png" />
     <Image Include="Resource\Character\Jump\Jump_2.png" />
     <Image Include="Resource\Character\Jump\Jump_3.png" />
+    <Image Include="Resource\Character\Jump\Jump_4.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_0.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_1.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_2.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_3.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_4.png" />
     <Image Include="Resource\Character\Ledge Grab\Ledge Grab_5.png" />
-    <Image Include="Resource\Character\Run\Run_0.png" />
     <Image Include="Resource\Character\Run\Run_1.png" />
     <Image Include="Resource\Character\Run\Run_2.png" />
     <Image Include="Resource\Character\Run\Run_3.png" />
@@ -177,6 +176,7 @@
     <Image Include="Resource\Character\Run\Run_5.png" />
     <Image Include="Resource\Character\Run\Run_6.png" />
     <Image Include="Resource\Character\Run\Run_7.png" />
+    <Image Include="Resource\Character\Run\Run_8.png" />
     <Image Include="Resource\Jungle Asset Pack\parallax background\plx-1.png" />
     <Image Include="Resource\Jungle Asset Pack\parallax background\plx-2.png" />
     <Image Include="Resource\Jungle Asset Pack\parallax background\plx-3.png" />

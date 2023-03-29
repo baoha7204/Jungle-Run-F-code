@@ -68,6 +68,7 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 void load_game(GameState* gameState) {
 	srand(time(NULL));
 	// Init GameState 
+	gameState->mode = GAMEMODE_SINGLEPLAYER; // will be handled later, which is selected by user
 	gameState->label = NULL;
 	gameState->player.x = 220;
 	gameState->player.y = 220;
@@ -79,124 +80,62 @@ void load_game(GameState* gameState) {
 	gameState->statusState = STATUS_STATE_LIVES;
 	gameState->player.lives = 2;
 	gameState->scrollX = 0;
-	gameState->map_1->counter = 0;
+	gameState->map->counter = 0;
+	gameState->player.isTakenDamage = 0;
 	// Load images and create rendering pictures from them
-	SDL_Surface* surface;
 		// Create character with Idle movement
-	for (int i = 0; i < 12; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Character\\Idle\\Idle_%d.png", i);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->idle_anim[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
+	load_texture(gameState, gameState->idle_anim, "Resource\\Character\\Idle\\Idle_%d.png", 12);
 		// Create character with Run movement
-	for (int i = 0; i < 8; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Character\\Run\\Run_%d.png", i);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->run_anim[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
+	load_texture(gameState, gameState->run_anim, "Resource\\Character\\Run\\Run_%d.png", 8);
 		// Create character with Jump movement
-	for (int i = 0; i < 4; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Character\\Jump\\Jump_%d.png", i);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->jump_anim[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
-		// Create character with ledge grab
-	for (int i = 0; i < 6; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Character\\Ledge Grab\\Ledge Grab_%d.png", i);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->ledgeGrab_anim[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
-	// Create Golem
-	surface = IMG_Load("Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png");
-	if (surface == NULL) {
-		SDL_Quit();
-		exit(1);
-	}
-	gameState->golem = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-	SDL_FreeSurface(surface);
+	load_texture(gameState, gameState->jump_anim, "Resource\\Character\\Jump\\Jump_%d.png", 4);
 	// Create background
-	for (int i = 0; i < 5; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", i + 1);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->background[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
+	load_texture(gameState, gameState->background, "Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", 5);
 	// Create platform
-	for (int i = 0; i < 5; i++) {
-		char str[128] = "";
-		sprintf_s(str, 128, "Resource\\Some Bullshit Platform\\Platform %d.png", i + 1);
-		surface = IMG_Load(str); // declare a surface = main computer memory
-		if (surface == NULL) {
-			SDL_Quit();
-			exit(1);
-		}
-		gameState->platform[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
-		SDL_FreeSurface(surface);
-	}
+	load_texture(gameState, gameState->platform, "Resource\\Some Bullshit Platform\\Platform %d.png", 5);
 		// Platform[5]
-	surface = IMG_Load("Resource\\Jungle Asset Pack\\jungle tileset\\jungle tileset.png");
+	SDL_Surface* surface = IMG_Load("Resource\\Jungle Asset Pack\\jungle tileset\\jungle tileset.png");
 	if (surface == NULL) {
 		SDL_Quit();
 		exit(1);
 	}
 	gameState->platform[5] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
 	SDL_FreeSurface(surface);
+	// Create fire trap
+	load_texture(gameState, gameState->fire_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Fire Trap\\PNGs\\Fire Trap - Level %d.png", 3);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {
 		SDL_Quit();
 		exit(1);
 	}
-	// init ledges
-	int temp = rand() % 5 + 3;
-	gameState->ledges[0].w = WIDTH_PLATFORM_3;
-	gameState->ledges[0].h = HEIGHT_PLATFORM_3;
-	gameState->ledges[0].x = 0;
-	gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
-	for (int i = 1; i < NUM_OF_LEDGES; i++) {
-		int additionalDis = 0;
-		if (i % temp == 0) {
-			Map* map = &gameState->map_1;
-			loadMap(&map[map->counter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			/*int additionalDis = 0;
-			do {
-				additionalDis = rand() % 350;
-			} while (additionalDis < 200);*/
-			additionalDis = WIDTH_WINDOW;
+	// create a fixed map
+	if (gameState->mode == GAMEMODE_SINGLEPLAYER) {
+		Map* map = &gameState->map;
+		// init ledges
+		gameState->ledges[0].w = WIDTH_PLATFORM_3;
+		gameState->ledges[0].h = HEIGHT_PLATFORM_3;
+		gameState->ledges[0].x = 0;
+		gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
+		gameState->ledges[0].isLethal = 0;
+		gameState->ledges[0].isBlocked = 1;
+		for (int i = 1; i < NUM_OF_LEDGES; i++) {
+			int additionalDis = 0;
+			if (i == 3) { // lv0
+				additionalDis = WIDTH_WINDOW;
+				loadMap(&map[map->counter++], lv0, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			}
+			else if (i == 5) { // lv1
+				additionalDis = WIDTH_WINDOW;
+				loadMap(&map[map->counter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			}
+			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
+			gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
+			gameState->ledges[i].w = WIDTH_PLATFORM_3;
+			gameState->ledges[i].h = HEIGHT_PLATFORM_3;
+			gameState->ledges[i].isLethal = 0;
+			gameState->ledges[i].isBlocked = 1;
 		}
-		gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
-		gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
-		gameState->ledges[i].w = WIDTH_PLATFORM_3;
-		gameState->ledges[i].h = HEIGHT_PLATFORM_3;
 	}
 }
 
@@ -207,37 +146,29 @@ void do_render(GameState* gameState) {
 		SDL_RenderCopy(renderer, gameState->background[i], NULL, NULL);
 	}
 	// draw Map
-	for (int i = 0; i < gameState->map_1->counter; i++) {
+	for (int i = 0; i < gameState->map->counter; i++) {
 		// draw map
-		drawMap(gameState, gameState->map_1[i]);
+		drawMap(gameState, &gameState->map[i]);
 	}
 	// draw ledges
 	drawLedges(gameState);
-	size_t animation_speed = SDL_GetTicks64() / 120;
 	if (gameState->player.status == 0) { // idle 
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_IDLE*2, HEIGHT_PLAYER_IDLE*2};
-		// animation smoothness
-		int i = animation_speed % 12;
-		SDL_RenderCopyEx(renderer, gameState->idle_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		int i = animation_smoothness(12, CHARACTER_FRAMES);
+		render_character_animation(gameState, gameState->idle_anim, WIDTH_PLAYER_IDLE, HEIGHT_PLAYER_IDLE, i);
 	}
 	else if (gameState->player.status == 1) { // run
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_RUN * 2, HEIGHT_PLAYER_RUN * 2 };
-		// animation smoothness
-		int i = animation_speed % 8;
-		SDL_RenderCopyEx(renderer, gameState->run_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		int i = animation_smoothness(8, CHARACTER_FRAMES);
+		render_character_animation(gameState, gameState->run_anim, WIDTH_PLAYER_RUN, HEIGHT_PLAYER_RUN, i);
 	}
 	else if (gameState->player.status == 2) { // jump
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
-		SDL_RenderCopyEx(renderer, gameState->jump_anim[0], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, 0);
 	}
 	else if (gameState->player.status == 3) { // mid air
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
-		SDL_RenderCopyEx(renderer, gameState->jump_anim[1], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, 1);
 	}
 	else if (gameState->player.status == 4) { // falling
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, WIDTH_PLAYER_JUMP*2, HEIGHT_PLAYER_JUMP*2 };
-		int i = animation_speed % 2 + 2;
-		SDL_RenderCopyEx(renderer, gameState->jump_anim[i], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		int i = animation_smoothness(2, CHARACTER_FRAMES) + 2;
+		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, i);
 	}
 	// Present the actual renderer
 	SDL_RenderPresent(renderer);
@@ -281,6 +212,7 @@ void collision_detect_map(GameState* gameState, Map* map) {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			if (map->pos[i][j] != 0) {
+				// init info
 				float px, py, pw, ph;
 				load_player_info(gameState, &px, &py, &pw, &ph);
 				float bw = map->ledges[i][j].w, bh = map->ledges[i][j].h, bx = map->ledges[i][j].x, by = map->ledges[i][j].y;
@@ -288,12 +220,21 @@ void collision_detect_map(GameState* gameState, Map* map) {
 				case 3:
 					bw = map->ledges[i][j].w * 3;
 					break;
-				case 4:
-					bw = WIDTH_PLATFORM_3;
-					bh = HEIGHT_PLATFORM_3;
-					break;
 				}
-				collision_correction(gameState, px, py, pw, ph, bx, by, bw, bh);
+				// detect collision
+				SDL_Rect rectA = { px,py,pw,ph };
+				SDL_Rect rectB = { bx,by,bw,bh };
+				if (SDL_HasIntersection(&rectA, &rectB)) {
+					if (!map->ledges[i][j].isBlocked) {
+						if (map->ledges[i][j].isLethal) {
+							gameState->player.isTakenDamage = 1;
+						}
+					}
+					else {
+						gameState->player.isTakenDamage = 0;
+						collision_correction(gameState, px, py, pw, ph, bx, by, bw, bh);
+					}
+				}
 			}
 		}
 	}
@@ -354,4 +295,51 @@ void load_player_info(GameState* gameState, float* px, float* py, float* pw, flo
 		*pw = WIDTH_PLAYER_LEDGEGRAB * 2, *ph = HEIGHT_PLAYER_LEDGEGRAB * 2;
 	}
 	*px = gameState->player.x, *py = gameState->player.y;
+}
+
+void load_texture(GameState* gameState, SDL_Texture* texture[], const char filePath[], int frame) {
+	SDL_Surface* surface;
+	for (int i = 0; i < frame; i++) {
+		char str[128] = "";
+		sprintf_s(str, 128, filePath, i + 1);
+		surface = IMG_Load(str); // declare a surface = main computer memory
+		if (surface == NULL) {
+			SDL_Quit();
+			exit(1);
+		}
+		texture[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+		SDL_FreeSurface(surface);
+	}
+}
+
+int animation_smoothness(int frame, const int frames) {
+	size_t animation_speed = SDL_GetTicks64() / frames;
+	int i = animation_speed % frame;
+	return i;
+}
+
+void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
+	// Set the color modulation to red
+	SDL_SetTextureColorMod(texture, 255, 0, 0);
+	// Render the texture to the renderer at the specified location
+	SDL_Rect dstRect = { x, y, 0, 0 };
+	SDL_QueryTexture(texture, NULL, NULL, &dstRect.w, &dstRect.h);
+	dstRect.w *= 2;
+	dstRect.h *= 2;
+	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
+	SDL_RenderPresent(gameState->renderer);
+	SDL_Delay(5);
+	// Reset the color modulation to white
+	SDL_SetTextureColorMod(texture, 255, 255, 255);
+	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
+}
+
+void render_character_animation(GameState* gameState, SDL_Texture* texture[], const int width, const int height, int frame) {
+	if (gameState->player.isTakenDamage) {
+		onTrapHit(gameState->renderer, texture[frame], gameState->scrollX + gameState->player.x, gameState->player.y);
+	}
+	else {
+		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, width * 2, height * 2 };
+		SDL_RenderCopyEx(gameState->renderer, texture[frame], NULL, &dstRect, 0, NULL, gameState->player.flip);
+	}
 }
