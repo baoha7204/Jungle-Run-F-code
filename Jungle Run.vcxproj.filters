@@ -43,22 +43,34 @@
     <Filter Include="Source Files\map">
       <UniqueIdentifier>{0acbb85c-88c9-4436-931a-132d1d6b03a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\load">
+      <UniqueIdentifier>{b0e7f9a0-86ad-42ea-bea0-c9165a297e8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\collision handling">
+      <UniqueIdentifier>{e38afb9a-a208-45c7-abe6-10558acee465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common functions">
+      <UniqueIdentifier>{ebb31288-0d99-4634-88c8-dfa37e7f2ca2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_1.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="map.c">
       <Filter>Source Files\map</Filter>
     </ClCompile>
+    <ClCompile Include="load.c">
+      <Filter>Source Files\load</Filter>
+    </ClCompile>
+    <ClCompile Include="collision_handling.c">
+      <Filter>Source Files\collision handling</Filter>
+    </ClCompile>
+    <ClCompile Include="common_functions.c">
+      <Filter>Source Files\common functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SDL_1.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="defs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -67,6 +79,15 @@
     </ClInclude>
     <ClInclude Include="map.h">
       <Filter>Source Files\map</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>Source Files\load</Filter>
+    </ClInclude>
+    <ClInclude Include="collision_handling.h">
+      <Filter>Source Files\collision handling</Filter>
+    </ClInclude>
+    <ClInclude Include="common_functions.h">
+      <Filter>Source Files\common functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDL_1.h"
+#include "common_functions.h"
 
 int main(int argc, char* argv[]) {
 	GameState gameState;
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 
 		// Calculate and print framerate
 		framerate = 1000.0f / elapsedTime;
-		printf("Framerate: %.2f\n", framerate);
+		// printf("Framerate: %.2f\n", framerate);
 	}
 
 	// Close and destroy the window
@@ -52,7 +52,9 @@ int main(int argc, char* argv[]) {
 	SDL_DestroyTexture(gameState.run_anim);
 	SDL_DestroyTexture(gameState.jump_anim);
 	SDL_DestroyTexture(gameState.platform);
-	SDL_DestroyTexture(gameState.background);
+	for (int i = 0; i < 5; i++) {
+		SDL_DestroyTexture(gameState.background[i].layer);
+	}
 	SDL_DestroyTexture(gameState.golem);
 	SDL_DestroyTexture(gameState.fire_trap);
 	if (gameState.label != NULL) {

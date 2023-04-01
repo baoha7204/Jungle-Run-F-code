@@ -134,16 +134,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="collision_handling.c" />
+    <ClCompile Include="load.c" />
     <ClCompile Include="main.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="map.c" />
-    <ClCompile Include="SDL_1.c" />
+    <ClCompile Include="common_functions.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="collision_handling.h" />
     <ClInclude Include="defs.h" />
+    <ClInclude Include="load.h" />
     <ClInclude Include="map.h" />
-    <ClInclude Include="SDL_1.h" />
+    <ClInclude Include="common_functions.h" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
   <ItemGroup>

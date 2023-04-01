@@ -7,7 +7,7 @@ typedef struct {
 	char* name;
 	int isTakenDamage;
 	int onLedge; // 0 = false, 1 = true
-	int flip, status; // 0 = idle, 1 = run, 2 = jump, 3 = mid air, 4 = falling, 5 = ledge grab
+	int flip, status; // 0 = idle, 1 = run, 2 = jump, 3 = mid air, 4 = falling
 } Object;
 
 typedef struct {
@@ -22,6 +22,12 @@ typedef struct {
 	int pos[MAP_HEIGHT][MAP_WIDTH]; // tilesmap
 	Ledge ledges[MAP_HEIGHT][MAP_WIDTH];
 } Map;
+
+typedef struct {
+	float defaultX, previousX, nextX;
+	float scrollSpeed;	
+	SDL_Texture* layer[3];
+} Background; // use to make parallax effect
 
 typedef struct {
 	// Gamemode
@@ -47,7 +53,7 @@ typedef struct {
 		// platform[5] is jungle tileset
 	SDL_Texture* platform[6];
 		// Background
-	SDL_Texture* background[5];
+	Background background[5];
 	// Label
 	SDL_Texture* label;
 	// Fonts
