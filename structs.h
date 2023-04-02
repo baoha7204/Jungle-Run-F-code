@@ -12,6 +12,7 @@ typedef struct {
 
 typedef struct {
 	float x, y, w, h;
+	int isMoved; // 0 = false, 1 = true
 	int isLethal; // 0 = false, 1 = true
 	int isBlocked; // 0 = false, 1 = true
 } Ledge;
@@ -25,7 +26,7 @@ typedef struct {
 
 typedef struct {
 	float defaultX, previousX, nextX;
-	float scrollSpeed;	
+	int scrollSpeed;	
 	SDL_Texture* layer[3];
 } Background; // use to make parallax effect
 
@@ -41,13 +42,18 @@ typedef struct {
 	// Ledges
 	Ledge ledges[NUM_OF_LEDGES];
 	// Images
+		// Trap
+			// Fire trap
+	SDL_Texture* fire_trap[3];
+			// Ceiling trap
+	SDL_Texture* ceiling_trap[1];
+			// Saw trap
+	SDL_Texture* saw_trap[1];
 		// Character animation
 	SDL_Texture* idle_anim[12];
 	SDL_Texture* jump_anim[4];
 	SDL_Texture* run_anim[8];
-		// Fire trap
-	SDL_Texture* fire_trap[3];
-		// Golem
+	// Golem
 	SDL_Texture* golem;
 		// Platform: 
 		// platform[5] is jungle tileset

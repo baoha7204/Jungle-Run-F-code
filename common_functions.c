@@ -138,7 +138,7 @@ void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
 	dstRect.h *= 2;
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
 	SDL_RenderPresent(gameState->renderer);
-	SDL_Delay(5);
+	// SDL_Delay(5);
 	// Reset the color modulation to white
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
@@ -146,7 +146,7 @@ void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
 
 void render_character_animation(GameState* gameState, SDL_Texture* texture[], const int width, const int height, int frame) {
 	if (gameState->player.isTakenDamage) {
-		onTrapHit(gameState->renderer, texture[frame], gameState->scrollX + gameState->player.x, gameState->player.y);
+		onTrapHit(gameState, texture[frame], gameState->scrollX + gameState->player.x, gameState->player.y);
 	}
 	else {
 		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, width * 2, height * 2 };

@@ -96,6 +96,10 @@ void load_game(GameState* gameState) {
 	SDL_FreeSurface(surface);
 	// Create fire trap
 	load_texture(gameState, gameState->fire_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Fire Trap\\PNGs\\Fire Trap - Level %d.png", 3);
+	// Create ceiling trap
+	load_texture(gameState, gameState->ceiling_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Ceiling Trap\\PNGs\\Ceiling Trap - Level %d.png", 1);
+	// Create saw trap
+	load_texture(gameState, gameState->saw_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Saw Trap\\PNGs\\Saw Trap - Level %d.png", 1);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {
@@ -104,31 +108,7 @@ void load_game(GameState* gameState) {
 	}
 	// create a fixed map
 	if (gameState->mode == GAMEMODE_SINGLEPLAYER) {
-		Map* map = &gameState->map;
-		// init ledges
-		gameState->ledges[0].w = WIDTH_PLATFORM_3;
-		gameState->ledges[0].h = HEIGHT_PLATFORM_3;
-		gameState->ledges[0].x = 0;
-		gameState->ledges[0].y = 800 - HEIGHT_PLATFORM_3;
-		gameState->ledges[0].isLethal = 0;
-		gameState->ledges[0].isBlocked = 1;
-		for (int i = 1; i < NUM_OF_LEDGES; i++) {
-			int additionalDis = 0;
-			if (i == 3) { // lv0
-				additionalDis = WIDTH_WINDOW;
-				loadMap(&map[map->counter++], lv0, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			}
-			else if (i == 5) { // lv1
-				additionalDis = WIDTH_WINDOW;
-				loadMap(&map[map->counter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			}
-			gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
-			gameState->ledges[i].y = 800 - HEIGHT_PLATFORM_3;
-			gameState->ledges[i].w = WIDTH_PLATFORM_3;
-			gameState->ledges[i].h = HEIGHT_PLATFORM_3;
-			gameState->ledges[i].isLethal = 0;
-			gameState->ledges[i].isBlocked = 1;
-		}
+		drawMap_SingleplayerMode(gameState);
 	}
 }
 

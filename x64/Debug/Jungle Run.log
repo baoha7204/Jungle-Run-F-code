@@ -1,53 +1,16 @@
-﻿  collision_handling.c
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(8,3): warning C4013: 'load_player_info' undefined; assuming extern returning int
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(28,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(28,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(28,30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(28,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(29,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(29,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(29,30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(29,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  common_functions.c
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(149,22): warning C4133: 'function': incompatible types - from 'SDL_Renderer *' to 'GameState *'
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(149,69): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(149,109): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(152,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(152,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  load.c
-C:\Users\Admin\source\repos\Jungle Run\load.c(39,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\load.c(107,8): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
-  main.c
-C:\Users\Admin\source\repos\Jungle Run\main.c(24,2): warning C4013: 'load_game' undefined; assuming extern returning int
-C:\Users\Admin\source\repos\Jungle Run\main.c(34,3): warning C4013: 'collision_detect_floor' undefined; assuming extern returning int
-C:\Users\Admin\source\repos\Jungle Run\main.c(38,4): warning C4013: 'collision_detect_map' undefined; assuming extern returning int
-C:\Users\Admin\source\repos\Jungle Run\main.c(51,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[12]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(51,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(52,39): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[8]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(52,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(53,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[4]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(53,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(54,39): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[6]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(54,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(56,51): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(56,45): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(59,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
-C:\Users\Admin\source\repos\Jungle Run\main.c(59,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\main.c(28,29): warning C4244: 'initializing': conversion from 'Uint64' to 'Uint32', possible loss of data
-  map.c
-C:\Users\Admin\source\repos\Jungle Run\map.c(93,54): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(93,78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(94,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(94,91): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(94,116): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(94,140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(100,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(100,89): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(100,113): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(100,138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(120,57): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(121,56): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(122,53): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(66): warning C4715: 'processEvents': not all control paths return a value
+﻿  map.c
+C:\Users\Admin\source\repos\Jungle Run\map.c(183,54): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(183,78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(184,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(184,91): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(184,116): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(184,140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(190,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(190,89): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(190,113): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(190,138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(200,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(201,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(202,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(229,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe
