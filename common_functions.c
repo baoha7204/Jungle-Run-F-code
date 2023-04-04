@@ -1,4 +1,5 @@
 #include "common_functions.h"
+#include "load.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -65,42 +66,22 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 	}
 }
 
-void do_render(GameState* gameState) {
-	SDL_Renderer* renderer = gameState->renderer;
-	SDL_RenderClear(renderer);
-	// draw background
-	drawBackground(gameState);
-	// draw Map
-	for (int i = 0; i < gameState->map->counter; i++) {
-		// draw map
-		drawMap(gameState, &gameState->map[i]);
-	}
-	// draw ledges
-	drawLedges(gameState);
-	if (gameState->player.status == 0) { // idle 
-		int i = animation_smoothness(12, CHARACTER_FRAMES);
-		render_character_animation(gameState, gameState->idle_anim, WIDTH_PLAYER_IDLE, HEIGHT_PLAYER_IDLE, i);
-	}
-	else if (gameState->player.status == 1) { // run
-		int i = animation_smoothness(8, CHARACTER_FRAMES);
-		render_character_animation(gameState, gameState->run_anim, WIDTH_PLAYER_RUN, HEIGHT_PLAYER_RUN, i);
-	}
-	else if (gameState->player.status == 2) { // jump
-		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, 0);
-	}
-	else if (gameState->player.status == 3) { // mid air
-		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, 1);
-	}
-	else if (gameState->player.status == 4) { // falling
-		int i = animation_smoothness(2, CHARACTER_FRAMES) + 2;
-		render_character_animation(gameState, gameState->jump_anim, WIDTH_PLAYER_JUMP, HEIGHT_PLAYER_JUMP, i);
-	}
-	// Present the actual renderer
-	SDL_RenderPresent(renderer);
-}
-
 void add_physics(GameState* gameState) {
 	Object* player = &gameState->player;
+	if (gameState->player.isImmortal) {
+		immortal_events(gameState);
+	}
+	if (touchBoss(gameState) || player->lives == 0 || player->y>HEIGHT_WINDOW+250) { // gameover <-> bad ending
+		gameState->statusState = STATUS_STATE_GAMEOVER;
+	}
+	//else if (player->x >= END_OF_GAME_POSITION) {
+	//	if (gameState->health_potion_counter < REQUIRED_HEALTH_POTION) {
+	//		gameState->statusState = STATUS_STATE_TRUE_END; // true ending
+	//	}
+	//	else if (gameState->health_potion_counter == REQUIRED_HEALTH_POTION) {
+	//		gameState->statusState = STATUS_STATE_GOOD_END; // good ending
+	//	}
+	//}
 	player->x += player->dx;
 	player->y += player->dy;
 	player->dy += GRAVITY;
@@ -108,7 +89,7 @@ void add_physics(GameState* gameState) {
 		if (player->dy < 0) {
 			gameState->player.status = 2;
 		}
-		else if (player->dy == 0 ) {
+		else if (player->dy == 0) {
 			gameState->player.status = 3;
 		}
 		else {
@@ -120,6 +101,7 @@ void add_physics(GameState* gameState) {
 	if (gameState->scrollX > 0) {
 		gameState->scrollX = 0;
 	}
+	updateBoss(gameState, gameState->dt);
 }
 
 int animation_smoothness(int frame, const int frames) {
@@ -138,18 +120,82 @@ void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
 	dstRect.h *= 2;
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
 	SDL_RenderPresent(gameState->renderer);
-	// SDL_Delay(5);
+	SDL_Delay(5);
 	// Reset the color modulation to white
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
 }
 
-void render_character_animation(GameState* gameState, SDL_Texture* texture[], const int width, const int height, int frame) {
-	if (gameState->player.isTakenDamage) {
-		onTrapHit(gameState, texture[frame], gameState->scrollX + gameState->player.x, gameState->player.y);
+// bot golem detect player
+void detectPlayer(GameState* gameState, Map* map, int row, int col, float dt, float px, float py, float pw, float ph) {
+	Ledge* golem = &map->ledges[row][col];
+	float bw = WIDTH_PLATFORM_6, bh = HEIGHT_PLATFORM_6, bx = golem->x, by = golem->y;
+	if (px + pw >= bx - SMOL_GOLEM_DETECT_RANGE && px <= bx + bw + SMOL_GOLEM_DETECT_RANGE && fabs(by-py)<=2 * HEIGHT_PLATFORM_6) { // detect player
+		if (px < bx + (bw / 2)) { // player in left , golem turn left
+			golem->smolGolem.d.x += -SMOL_GOLEM_SPEED;
+			golem->smolGolem.flip = 1;
+		}
+		else if (px > bx + (bw / 2)) { // player in right, golem turn right
+			golem->smolGolem.d.x += SMOL_GOLEM_SPEED;
+			golem->smolGolem.flip = 0;
+		}
+	}
+	else golem->smolGolem.d.x = 0.f;
+}
+
+void updateGolem(Map* map, int row, int col, float dt) {
+	Ledge* golem = &map->ledges[row][col];
+	if (golem->smolGolem.d.x > 120) {
+		golem->smolGolem.d.x = 120;
+	} 
+	if (golem->smolGolem.d.x < -120) {
+		golem->smolGolem.d.x = -120;
+	}
+	golem->x += golem->smolGolem.d.x * dt;
+}
+
+void updateBoss(GameState* gameState, float dt) {
+	Golem* boss = &gameState->gigaGolem;
+	float camX = -gameState->scrollX;
+	if (camX - boss->pos.x > 0 && gameState->player.dx > 0) { // neu player chay, toc do golem = toc do cua player de bat kip player
+		boss->d.x += gameState->player.dx;
 	}
 	else {
-		SDL_Rect dstRect = { gameState->scrollX + gameState->player.x, gameState->player.y, width * 2, height * 2 };
-		SDL_RenderCopyEx(gameState->renderer, texture[frame], NULL, &dstRect, 0, NULL, gameState->player.flip);
+		boss->d.x = GIGA_GOLEM_SPEED;
+	} // neu phayer dung lai thi golem se di voi toc do cua golem
+	boss->pos.x += boss->d.x * dt;
+}
+
+int touchBoss(GameState* gameState) { // return true if touched, false if not touched
+	Golem boss = gameState->gigaGolem;
+	// init info
+	float px, py, pw, ph;
+	load_player_info(gameState, &px, &py, &pw, &ph);
+	float bx = boss.pos.x, bw = WIDTH_GIGA_GOLEM;
+	if (px <= (bx + bw)) {
+		return 1;
+	}
+	return 0;
+}
+
+int Over(GameState* gameState) {
+	gameState->font = NULL;
+	TTF_Init();
+	gameState->font = TTF_OpenFont("Resource\\Fonts\\Kanit-Light.ttf", 72);
+	SDL_Rect textRect;
+	SDL_Surface* textSurface = TTF_RenderText_Solid(gameState->font, "Game Over", (SDL_Color) { 255, 0, 0, 255 });
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(gameState->renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+	SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
+	textRect.x = (WIDTH_WINDOW - textRect.w) / 2;
+	textRect.y = (HEIGHT_WINDOW - textRect.h) / 2;
+	SDL_RenderCopy(gameState->renderer, textTexture, NULL, &textRect);
+	SDL_RenderPresent(gameState->renderer);
+}
+
+void immortal_events(GameState* gameState) {
+	float currentTime = SDL_GetTicks64() / 1000.0f;
+	if (currentTime - gameState->player.immortalStartTime >= 2) {
+		gameState->player.isImmortal = 0;
 	}
 }

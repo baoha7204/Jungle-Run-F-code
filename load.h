@@ -1,6 +1,5 @@
 #ifndef LOAD
 #define LOAD
-
 #include "common_functions.h"
 void load_texture(GameState* gameState, SDL_Texture* texture[], const char filePath[], int frame);
 void load_background(GameState* gameState, SDL_Texture* texture[], const char filePath[], int frame, int index);

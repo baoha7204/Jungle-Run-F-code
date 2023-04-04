@@ -52,6 +52,9 @@
     <Filter Include="Source Files\common functions">
       <UniqueIdentifier>{ebb31288-0d99-4634-88c8-dfa37e7f2ca2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render">
+      <UniqueIdentifier>{a0ca499d-fb11-4b6a-8bd6-68a0401f35a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="common_functions.c">
       <Filter>Source Files\common functions</Filter>
+    </ClCompile>
+    <ClCompile Include="render.c">
+      <Filter>Source Files\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="common_functions.h">
       <Filter>Source Files\common functions</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>Source Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

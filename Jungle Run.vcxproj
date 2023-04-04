@@ -141,6 +141,7 @@
     </ClCompile>
     <ClCompile Include="map.c" />
     <ClCompile Include="common_functions.c" />
+    <ClCompile Include="render.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision_handling.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="load.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="common_functions.h" />
+    <ClInclude Include="render.h" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
   <ItemGroup>

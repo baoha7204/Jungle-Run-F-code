@@ -1,20 +1,36 @@
 #ifndef structs
 #define structs
+
+typedef struct {
+	float x;
+	float y;
+} Vector;
+
+typedef struct {
+	Vector pos;
+	Vector d;
+	int flip;
+} Golem;
+
 typedef struct {
 	float x, y;
 	float dx, dy;
 	short lives;
 	char* name;
 	int isTakenDamage;
+	int isImmortal;
+	float immortalStartTime;
 	int onLedge; // 0 = false, 1 = true
 	int flip, status; // 0 = idle, 1 = run, 2 = jump, 3 = mid air, 4 = falling
 } Object;
 
 typedef struct {
 	float x, y, w, h;
-	int isMoved; // 0 = false, 1 = true
+	// item info
+	int isItem, itemType, isObtained;
 	int isLethal; // 0 = false, 1 = true
 	int isBlocked; // 0 = false, 1 = true
+	Golem smolGolem;
 } Ledge;
 
 typedef struct {
@@ -31,14 +47,20 @@ typedef struct {
 } Background; // use to make parallax effect
 
 typedef struct {
+	// Time
+	float dt;
 	// Gamemode
-	int mode;
+	int mode, difficulty;
+	// Required items to achieve good ending
+	int health_potion_counter; // if = 5 -> good ending 
 	// Scroll offset
 	float scrollX;
+	// status state
+	int statusState;
+	// Giga golem
+	Golem gigaGolem;
 	// Players
 	Object player;
-	// Status State
-	int statusState;
 	// Ledges
 	Ledge ledges[NUM_OF_LEDGES];
 	// Images
@@ -49,12 +71,16 @@ typedef struct {
 	SDL_Texture* ceiling_trap[1];
 			// Saw trap
 	SDL_Texture* saw_trap[1];
+			// Lightning trap
+	SDL_Texture* lightning_trap[2];
+		// Items
+	SDL_Texture* items[1];
 		// Character animation
 	SDL_Texture* idle_anim[12];
 	SDL_Texture* jump_anim[4];
 	SDL_Texture* run_anim[8];
 	// Golem
-	SDL_Texture* golem;
+	SDL_Texture* golem[1];
 		// Platform: 
 		// platform[5] is jungle tileset
 	SDL_Texture* platform[6];
@@ -67,6 +93,6 @@ typedef struct {
 	// Renderer
 	SDL_Renderer* renderer;
 	// Map
-	Map map[20];
+	Map map[15];
 } GameState;
 #endif // !stucts

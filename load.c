@@ -37,28 +37,47 @@ void load_background(GameState* gameState, SDL_Texture* texture[], const char fi
 
 void load_game(GameState* gameState) {
 	srand(time(NULL));
-	// Init GameState 
+	// Init GameState
+	gameState->dt = 0;
+	gameState->statusState = STATUS_STATE_GAME;
 	gameState->mode = GAMEMODE_SINGLEPLAYER; // will be handled later, which is selected by user
-	gameState->statusState = STATUS_STATE_LIVES;
+	gameState->difficulty = DIFFICULTY_EASY; // will be handled later, which is selected by user
 	gameState->label = NULL;
-	gameState->player.x = 220;
+	gameState->player.x = 320;
 	gameState->player.y = 220;
 	gameState->player.dx = 0;
 	gameState->player.dy = 0;
 	gameState->player.flip = 0;
 	gameState->player.status = 0;
 	gameState->player.onLedge = 0;
-	gameState->player.lives = 2;
+	gameState->player.isImmortal = 0;
+	gameState->player.immortalStartTime = 0;
+	gameState->health_potion_counter = 0;
+	// Init giga golem
+	gameState->gigaGolem.flip = 0;
+	gameState->gigaGolem.d.x = 0;
+	gameState->gigaGolem.pos.x = 0;
+	gameState->gigaGolem.pos.y = (HEIGHT_WINDOW-HEIGHT_GIGA_GOLEM) / 2;
+	if (gameState->difficulty == DIFFICULTY_EASY) {
+		gameState->player.lives = MAX_HEALTH_EASY;
+	}
+	else if (gameState->difficulty == DIFFICULTY_MEDIUM) {
+		gameState->player.lives = MAX_HEALTH_MEDIUM;
+	} else if (gameState->difficulty == DIFFICULTY_HARD) {
+		gameState->player.lives = MAX_HEALTH_HARD;
+	}
 	gameState->scrollX = 0;
 	gameState->map->counter = 0;
 	gameState->player.isTakenDamage = 0;
 	// Load images and create rendering pictures from them
-		// Create character with Idle movement
+	// Create character with Idle movement
 	load_texture(gameState, gameState->idle_anim, "Resource\\Character\\Idle\\Idle_%d.png", 12);
 	// Create character with Run movement
 	load_texture(gameState, gameState->run_anim, "Resource\\Character\\Run\\Run_%d.png", 8);
 	// Create character with Jump movement
 	load_texture(gameState, gameState->jump_anim, "Resource\\Character\\Jump\\Jump_%d.png", 4);
+	// Create golem
+	load_texture(gameState, gameState->golem, "Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png", 1);
 	// Create background
 	SDL_Surface* surface;
 	for (int i = 0; i < 5; i++) {
@@ -86,7 +105,7 @@ void load_game(GameState* gameState) {
 	}
 	// Create platform
 	load_texture(gameState, gameState->platform, "Resource\\Some Bullshit Platform\\Platform %d.png", 5);
-	// Platform[5]
+		// Platform[5]
 	surface = IMG_Load("Resource\\Jungle Asset Pack\\jungle tileset\\jungle tileset.png");
 	if (surface == NULL) {
 		SDL_Quit();
@@ -100,6 +119,10 @@ void load_game(GameState* gameState) {
 	load_texture(gameState, gameState->ceiling_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Ceiling Trap\\PNGs\\Ceiling Trap - Level %d.png", 1);
 	// Create saw trap
 	load_texture(gameState, gameState->saw_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Saw Trap\\PNGs\\Saw Trap - Level %d.png", 1);
+	// Create lightning trap
+	load_texture(gameState, gameState->lightning_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Lightning Trap\\PNGs\\Lightning Trap - Level %d.png", 2);
+	// Create items
+	load_texture(gameState, gameState->items, "Resource\\platformer items\\animated_items.png", 1);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {
