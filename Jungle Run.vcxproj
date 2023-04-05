@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\Admin\source\repos\Jungle Run\External library\SDL2\include;C:\Users\Admin\source\repos\Jungle Run\External library\SDL2_ttf\include;C:\Users\Admin\source\repos\Jungle Run\External library\SDL2_image\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Admin\source\repos\Jungle Run\External library\SDL2_image\lib\x64;C:\Users\Admin\source\repos\Jungle Run\External library\SDL2_ttf\lib\x64;C:\Users\Admin\source\repos\Jungle Run\External library\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)External library\SDL2\include;$(ProjectDir)External library\SDL2_ttf\include;$(ProjectDir)External library\SDL2_image\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)External library\SDL2_image\lib\x64;$(ProjectDir)External library\SDL2\lib\x64;$(ProjectDir)External library\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -1,8 +1,1 @@
-﻿  render.c
-C:\Users\Admin\source\repos\Jungle Run\render.c(58,59): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(58,99): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(61,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(61,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(70,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(70,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe
+﻿  Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe
