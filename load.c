@@ -42,7 +42,8 @@ void load_game(GameState* gameState) {
 	gameState->statusState = STATUS_STATE_GAME;
 	gameState->mode = GAMEMODE_SINGLEPLAYER; // will be handled later, which is selected by user
 	gameState->difficulty = DIFFICULTY_EASY; // will be handled later, which is selected by user
-	gameState->label = NULL;
+	gameState->label_lives = NULL;
+	gameState->label_health_potion = NULL;
 	gameState->player.x = 320;
 	gameState->player.y = 220;
 	gameState->player.dx = 0;
@@ -53,11 +54,13 @@ void load_game(GameState* gameState) {
 	gameState->player.isImmortal = 0;
 	gameState->player.immortalStartTime = 0;
 	gameState->health_potion_counter = 0;
+	gameState->isKeyObtained = 0;
+	gameState->flag = 0;
 	// Init giga golem
 	gameState->gigaGolem.flip = 0;
 	gameState->gigaGolem.d.x = 0;
 	gameState->gigaGolem.pos.x = 0;
-	gameState->gigaGolem.pos.y = (HEIGHT_WINDOW-HEIGHT_GIGA_GOLEM) / 2;
+	gameState->gigaGolem.pos.y = (HEIGHT_WINDOW-HEIGHT_GIGA_GOLEM) / 2.0;
 	if (gameState->difficulty == DIFFICULTY_EASY) {
 		gameState->player.lives = MAX_HEALTH_EASY;
 	}

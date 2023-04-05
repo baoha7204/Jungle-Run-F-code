@@ -27,7 +27,7 @@ void collision_detect_map(GameState* gameState, Map* map) {
 					updateGolem(map, i, j, gameState->dt);
 				}
 				else if (map->ledges[i][j].itemType == ITEM_TYPE_KEY && map->ledges[i][j].isObtained) {
-					isKeyObtained = 1;
+					gameState->isKeyObtained = 1;
 				}
 				// detect collision
 				SDL_Rect rectA = { px,py,pw,ph };

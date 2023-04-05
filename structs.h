@@ -1,5 +1,5 @@
-#ifndef structs
-#define structs
+#ifndef STRUCTS
+#define STRUCTS
 
 typedef struct {
 	float x;
@@ -53,6 +53,8 @@ typedef struct {
 	int mode, difficulty;
 	// Required items to achieve good ending
 	int health_potion_counter; // if = 5 -> good ending 
+	// draw key map
+	int isKeyObtained, flag;
 	// Scroll offset
 	float scrollX;
 	// status state
@@ -87,12 +89,13 @@ typedef struct {
 		// Background
 	Background background[5];
 	// Label
-	SDL_Texture* label;
+	SDL_Texture* label_lives;
+	SDL_Texture* label_health_potion;
 	// Fonts
 	TTF_Font* font;
 	// Renderer
 	SDL_Renderer* renderer;
 	// Map
-	Map map[15];
+	Map map[20];
 } GameState;
 #endif // !stucts

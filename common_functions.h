@@ -1,5 +1,5 @@
-#ifndef SDL_1
-#define SDL_1
+#ifndef COMMON_FUNCTIONS
+#define COMMON_FUNCTIONS
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -17,4 +17,5 @@ void updateBoss(GameState* gameState, float dt);
 int touchBoss(GameState* gameState);
 int Over(GameState* gameState);
 void immortal_events(GameState* gameState);
+void clean(GameState* gameState, SDL_Window* window);
 #endif

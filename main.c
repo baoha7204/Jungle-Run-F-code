@@ -46,29 +46,10 @@ int main(int argc, char* argv[]) {
 		framerate = 1000.0f / elapsedTime;
 		gameState.dt = elapsedTime / 1000.0f;
 		// printf("Framerate: %.2f\n", framerate);
-		printf("%hi\n", gameState.player.lives);
+		// printf("%hi\n", gameState.player.lives);
 	}
 
 	// Close and destroy the window
-	SDL_DestroyTexture(gameState.idle_anim);
-	SDL_DestroyTexture(gameState.run_anim);
-	SDL_DestroyTexture(gameState.jump_anim);
-	SDL_DestroyTexture(gameState.platform);
-	for (int i = 0; i < 5; i++) {
-		SDL_DestroyTexture(gameState.background[i].layer);
-	}
-	SDL_DestroyTexture(gameState.golem);
-	SDL_DestroyTexture(gameState.fire_trap);
-	if (gameState.label != NULL) {
-		SDL_DestroyTexture(gameState.label);
-	}
-	TTF_CloseFont(gameState.font);
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	TTF_Quit();
-
-	// Clean up
-	SDL_Quit();
-
+	clean(&gameState, window);
 	return 0;
 }

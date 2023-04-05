@@ -1,8 +1,6 @@
-#ifndef map
-#define tileMap
+#ifndef MAP
+#define TILEMAP
 #include "common_functions.h"
-
-static int isKeyObtained = 0;
 
 static int lv0[MAP_HEIGHT][MAP_WIDTH] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -282,7 +280,7 @@ static int lv14[MAP_HEIGHT][MAP_WIDTH] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -307,10 +305,11 @@ static int lv15[MAP_HEIGHT][MAP_WIDTH] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-void loadMap(Map* map, int arr[MAP_HEIGHT][MAP_WIDTH], float x, float y);
+void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y);
 void drawMap(GameState* gameState, Map* map);
 void drawLedges(GameState* gameState);
 void drawTilesMap(GameState* gameState, Map map, SDL_Rect srcRect, SDL_Texture* texture, int row, int col, double angle, int flip);
 void drawBackground(GameState* gameState);
 void drawMap_SingleplayerMode(GameState* gameState);
+void draw_key_map(GameState* gameState, int ledgeNumber);
 #endif

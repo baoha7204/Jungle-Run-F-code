@@ -180,7 +180,6 @@ int touchBoss(GameState* gameState) { // return true if touched, false if not to
 
 int Over(GameState* gameState) {
 	gameState->font = NULL;
-	TTF_Init();
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\Kanit-Light.ttf", 72);
 	SDL_Rect textRect;
 	SDL_Surface* textSurface = TTF_RenderText_Solid(gameState->font, "Game Over", (SDL_Color) { 255, 0, 0, 255 });
@@ -198,4 +197,28 @@ void immortal_events(GameState* gameState) {
 	if (currentTime - gameState->player.immortalStartTime >= 2) {
 		gameState->player.isImmortal = 0;
 	}
+}
+
+void clean(GameState* gameState, SDL_Window* window) {
+	SDL_DestroyTexture(gameState->idle_anim);
+	SDL_DestroyTexture(gameState->run_anim);
+	SDL_DestroyTexture(gameState->jump_anim);
+	SDL_DestroyTexture(gameState->platform);
+	for (int i = 0; i < 5; i++) {
+		SDL_DestroyTexture(gameState->background[i].layer);
+	}
+	SDL_DestroyTexture(gameState->golem);
+	SDL_DestroyTexture(gameState->fire_trap);
+	if (gameState->label_lives != NULL) {
+		SDL_DestroyTexture(gameState->label_lives);
+	}
+	if (gameState->label_health_potion != NULL) {
+		SDL_DestroyTexture(gameState->label_health_potion);
+	}
+	TTF_CloseFont(gameState->font);
+	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(gameState->renderer);
+	TTF_Quit();
+	// Clean up
+	SDL_Quit();
 }

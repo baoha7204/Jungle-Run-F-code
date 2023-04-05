@@ -1,5 +1,5 @@
-#ifndef defs
-#define defs
+#ifndef DEFS
+#define DEFS
 #define WIDTH_WINDOW 1200
 #define HEIGHT_WINDOW 800
 

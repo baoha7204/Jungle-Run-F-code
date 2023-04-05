@@ -1,7 +1,8 @@
 #include "map.h"
 #include <stdio.h>
+#include "structs.h"
 
-void loadMap(Map* map, int arr[MAP_HEIGHT][MAP_WIDTH], float x, float y) {
+void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
 	for (int row = 0; row < MAP_HEIGHT; row++) {
 		for (int col = 0; col < MAP_WIDTH; col++) {
 			map->pos[row][col] = arr[row][col];
@@ -341,14 +342,8 @@ void drawMap_SingleplayerMode(GameState* gameState) {
 	for (int i = 1; i < NUM_OF_LEDGES; i++) {
 		int additionalDis = 0;
 		if (i == 3) { // lv0 - parkour
-			additionalDis = 2 * WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv13, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			if (isKeyObtained) {
-				loadMap(&map[map->counter++], lv14, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
-			}
-			else {
-				loadMap(&map[map->counter++], lv15, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
-			}
+			additionalDis = WIDTH_WINDOW;
+			loadMap(&map[map->counter++], lv0, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 5) { // lv1 - fire trap
 			additionalDis = WIDTH_WINDOW;
@@ -392,12 +387,7 @@ void drawMap_SingleplayerMode(GameState* gameState) {
 		else if (i == 23) { // lv13 + lv14/lv15
 			additionalDis = 2 * WIDTH_WINDOW;
 			loadMap(&map[map->counter++], lv13, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			if (isKeyObtained) {
-				loadMap(&map[map->counter++], lv14, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
-			}
-			else {
-				loadMap(&map[map->counter++], lv15, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
-			}
+			loadMap(&map[map->counter++], lv15, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 		}
 		gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
 		gameState->ledges[i].y = HEIGHT_WINDOW - HEIGHT_PLATFORM_3;
@@ -406,4 +396,11 @@ void drawMap_SingleplayerMode(GameState* gameState) {
 		gameState->ledges[i].isLethal = 0;
 		gameState->ledges[i].isBlocked = 1;
 	}
+}
+
+void draw_key_map(GameState* gameState, int ledgeNumber) {
+	Map* map = &gameState->map;
+	const int MAX_MAP = 15;
+	loadMap(&map[MAX_MAP - 1], lv14, gameState->ledges[ledgeNumber - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+	gameState->flag = 1;
 }
