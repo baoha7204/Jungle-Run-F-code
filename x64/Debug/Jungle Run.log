@@ -1,1 +1,17 @@
-﻿  Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe
+﻿  map.c
+C:\Users\Admin\source\repos\Jungle Run\map.c(325,54): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(325,78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(326,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(326,91): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(326,116): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(326,140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(332,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(332,89): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(332,113): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(332,138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(341,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(342,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(343,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\map.c(369,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
+C:\Users\Admin\source\repos\Jungle Run\map.c(437,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
+  Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe

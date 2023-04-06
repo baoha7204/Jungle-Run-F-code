@@ -15,6 +15,7 @@ void load_texture(GameState* gameState, SDL_Texture* texture[], const char fileP
 			SDL_Quit();
 			exit(1);
 		}
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0, 0));
 		texture[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
 		SDL_FreeSurface(surface);
 	}
@@ -44,7 +45,7 @@ void load_game(GameState* gameState) {
 	gameState->difficulty = DIFFICULTY_EASY; // will be handled later, which is selected by user
 	gameState->label_lives = NULL;
 	gameState->label_health_potion = NULL;
-	gameState->player.x = 320;
+	gameState->player.x = 500;
 	gameState->player.y = 220;
 	gameState->player.dx = 0;
 	gameState->player.dy = 0;
@@ -126,6 +127,8 @@ void load_game(GameState* gameState) {
 	load_texture(gameState, gameState->lightning_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Lightning Trap\\PNGs\\Lightning Trap - Level %d.png", 2);
 	// Create items
 	load_texture(gameState, gameState->items, "Resource\\platformer items\\animated_items.png", 1);
+	// Create sprakling star
+	load_texture(gameState, gameState->sparkling_star, "Resource\\sparkle\\sparkle.png", 1);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {

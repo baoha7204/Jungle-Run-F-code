@@ -45,8 +45,7 @@ int main(int argc, char* argv[]) {
 		// Calculate and print framerate
 		framerate = 1000.0f / elapsedTime;
 		gameState.dt = elapsedTime / 1000.0f;
-		// printf("Framerate: %.2f\n", framerate);
-		// printf("%hi\n", gameState.player.lives);
+		printf("Framerate: %.2f\n", framerate);
 	}
 
 	// Close and destroy the window

@@ -111,6 +111,7 @@ int animation_smoothness(int frame, const int frames) {
 }
 
 void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
+	SDL_SetRenderTarget(&gameState->renderer, texture);
 	// Set the color modulation to red
 	SDL_SetTextureColorMod(texture, 255, 0, 0);
 	// Render the texture to the renderer at the specified location
@@ -120,7 +121,6 @@ void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
 	dstRect.h *= 2;
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
 	SDL_RenderPresent(gameState->renderer);
-	SDL_Delay(5);
 	// Reset the color modulation to white
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
 	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
@@ -172,7 +172,7 @@ int touchBoss(GameState* gameState) { // return true if touched, false if not to
 	float px, py, pw, ph;
 	load_player_info(gameState, &px, &py, &pw, &ph);
 	float bx = boss.pos.x, bw = WIDTH_GIGA_GOLEM;
-	if (px <= (bx + bw)) {
+	if (px <= (bx + 0.75*bw)) {
 		return 1;
 	}
 	return 0;
@@ -194,7 +194,7 @@ int Over(GameState* gameState) {
 
 void immortal_events(GameState* gameState) {
 	float currentTime = SDL_GetTicks64() / 1000.0f;
-	if (currentTime - gameState->player.immortalStartTime >= 2) {
+	if (currentTime - gameState->player.immortalStartTime >= 3) {
 		gameState->player.isImmortal = 0;
 	}
 }

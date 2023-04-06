@@ -76,6 +76,9 @@ void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
 				map->ledges[row][col].isItem = 1;
 				map->ledges[row][col].itemType = ITEM_TYPE_KEY;
 				break;
+			case 22:
+				map->ledges[row][col].isBlocked = 0;
+				break;
 			}
 		}
 	}
@@ -133,6 +136,13 @@ void drawMap(GameState* gameState, Map* map) {
 				drawTilesMap(gameState, *map, srcRect, gameState->fire_trap[2], row, col, 0, 0);
 				break;
 			case 7: // ceiling trap lv1 but always lethal and stable
+				smoothness = animation_smoothness(6, FIRETRAP_FRAMES_LV3);
+				if (smoothness == 0) {
+					map->ledges[row][col].isLethal = 1;
+				}
+				else {
+					map->ledges[row][col].isLethal = 0;
+				}
 				srcRect = (SDL_Rect){ 16, 0, 33, 20 };
 				drawTilesMap(gameState, *map, srcRect, gameState->ceiling_trap[0], row, col, 180, 0);
 				break;
@@ -270,6 +280,13 @@ void drawMap(GameState* gameState, Map* map) {
 				drawTilesMap(gameState, *map, srcRect, gameState->golem[0], row, col, 0, map->ledges[row][col].smolGolem.flip);
 				break;
 			case 20: // ceiling trap lv1 but always lethal and stable
+				smoothness = animation_smoothness(6, FIRETRAP_FRAMES_LV3);
+				if (smoothness == 0) {
+					map->ledges[row][col].isLethal = 1;
+				}
+				else {
+					map->ledges[row][col].isLethal = 0;
+				}
 				srcRect = (SDL_Rect){ 16, 0, 33, 20 };
 				drawTilesMap(gameState, *map, srcRect, gameState->ceiling_trap[0], row, col, 0, 0);
 				break;
@@ -279,6 +296,24 @@ void drawMap(GameState* gameState, Map* map) {
 					srcRect = (SDL_Rect){ smoothness * 32, 13 * 32, 32, 32 };
 					drawTilesMap(gameState, *map, srcRect, gameState->items[0], row, col, 0, 0);
 				}
+				break;
+			case 22:
+				smoothness = animation_smoothness(16, FIRST_AID_KIT_FRAMES);
+				int k;
+				if (smoothness >= 0 && smoothness < 4) {
+					k = 0;
+				}
+				else if (smoothness >= 4 && smoothness < 8) {
+					k = 1;
+				}
+				else if (smoothness >= 8 && smoothness < 12) {
+					k = 2;
+				}
+				else {
+					k = 3;
+				}
+				srcRect = (SDL_Rect){ smoothness % 4 * 32, k * 32, 32, 32 };
+				drawTilesMap(gameState, *map, srcRect, gameState->sparkling_star[0], row, col, 0, 0);
 				break;
 			}
 		}

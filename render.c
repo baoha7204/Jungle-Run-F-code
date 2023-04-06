@@ -54,7 +54,7 @@ void do_render(GameState* gameState) {
 }
 
 void render_character_animation(GameState* gameState, SDL_Texture* texture[], const int width, const int height, int frame) {
-	if (gameState->player.isTakenDamage) { 
+	if (gameState->player.isTakenDamage && gameState->player.isImmortal) {
 		onTrapHit(gameState, texture[frame], gameState->scrollX + gameState->player.x, gameState->player.y);
 	}
 	else {

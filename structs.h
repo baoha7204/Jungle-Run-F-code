@@ -18,6 +18,7 @@ typedef struct {
 	short lives;
 	char* name;
 	int isTakenDamage;
+	// imomortal event
 	int isImmortal;
 	float immortalStartTime;
 	int onLedge; // 0 = false, 1 = true
@@ -77,11 +78,13 @@ typedef struct {
 	SDL_Texture* lightning_trap[2];
 		// Items
 	SDL_Texture* items[1];
+		// Sparkling star
+	SDL_Texture* sparkling_star[1];
 		// Character animation
 	SDL_Texture* idle_anim[12];
 	SDL_Texture* jump_anim[4];
 	SDL_Texture* run_anim[8];
-	// Golem
+		// Golem
 	SDL_Texture* golem[1];
 		// Platform: 
 		// platform[5] is jungle tileset
