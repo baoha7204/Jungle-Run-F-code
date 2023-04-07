@@ -21,6 +21,20 @@ void load_texture(GameState* gameState, SDL_Texture* texture[], const char fileP
 	}
 }
 
+void load_sound_effect(Mix_Chunk* sound, const char filePath[]) {
+	sound = Mix_LoadWAV(filePath);
+	if (sound != NULL) {
+		Mix_VolumeChunk(sound, MIX_MAX_VOLUME);
+	}
+}
+
+void load_music(Mix_Music* music, const char filePath[]) {
+	music = Mix_LoadMUS(filePath);
+	if (music != NULL) {
+		Mix_VolumeMusic(music, MIX_MAX_VOLUME);
+	}
+}
+
 void load_background(GameState* gameState, SDL_Texture* texture[], const char filePath[], const int frame, int index) {
 	SDL_Surface* surface;
 	for (int i = 0; i < frame; i++) {
@@ -135,6 +149,32 @@ void load_game(GameState* gameState) {
 		SDL_Quit();
 		exit(1);
 	}
+	// load sound
+	gameState->soundEffects.getDamaged = NULL;
+	gameState->soundEffects.electricHurt = NULL;
+	gameState->soundEffects.ItemPickUp = NULL;
+	gameState->soundEffects.jump = NULL;
+	gameState->soundEffects.landing = NULL;
+	gameState->soundEffects.spike = NULL;
+	load_sound_effect(gameState->soundEffects.getDamaged, "Resource\\Sound\\Sound Effects\\DamageSound.wav");
+	load_sound_effect(gameState->soundEffects.electricHurt, "Resource\\Sound\\Sound Effects\\ElectricHurtSound.wav");
+	load_sound_effect(gameState->soundEffects.ItemPickUp, "Resource\\Sound\\Sound Effects\\ItemPickupSound.wav");
+	load_sound_effect(gameState->soundEffects.jump, "Resource\\Sound\\Sound Effects\\jump.wav");
+	load_sound_effect(gameState->soundEffects.landing, "Resource\\Sound\\Sound Effects\\LandingSound.wav");
+	load_sound_effect(gameState->soundEffects.spike, "Resource\\Sound\\Sound Effects\\SpikeSound.wav");
+	// load music
+	gameState->soundTracks.inGame[0] = NULL;
+	gameState->soundTracks.inGame[1] = NULL;
+	gameState->soundTracks.inGame[2] = NULL;
+	gameState->soundTracks.menu = NULL;
+	gameState->soundTracks.storyLine[0] = NULL;
+	gameState->soundTracks.storyLine[1] = NULL;
+	load_music(gameState->soundTracks.inGame[0], "Resource\\Sound\\Soundtrack\\In Game 1.mp3");
+	load_music(gameState->soundTracks.inGame[1], "Resource\\Sound\\Soundtrack\\In Game 2.mp3");
+	load_music(&gameState->soundTracks.inGame[2], "Resource\\Sound\\Soundtrack\\In Game 3.mp3");
+	load_music(gameState->soundTracks.menu, "Resource\\Sound\\Soundtrack\\Main Menu.mp3");
+	load_music(gameState->soundTracks.storyLine[0], "Resource\\Sound\\Soundtrack\\Storyline 1.mp3");
+	// load_music(gameState->soundTracks.storyLine[1], "Resource\\Sound\\Soundtrack\\Storyline 2.mp3");
 	// create a fixed map
 	if (gameState->mode == GAMEMODE_SINGLEPLAYER) {
 		drawMap_SingleplayerMode(gameState);

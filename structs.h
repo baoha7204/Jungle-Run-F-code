@@ -48,6 +48,21 @@ typedef struct {
 } Background; // use to make parallax effect
 
 typedef struct {
+	Mix_Chunk* getDamaged;
+	Mix_Chunk* electricHurt;
+	Mix_Chunk* ItemPickUp;
+	Mix_Chunk* landing;
+	Mix_Chunk* jump;
+	Mix_Chunk* spike;
+} SoundEffect;
+
+typedef struct {
+	Mix_Music* inGame[3];
+	Mix_Music* menu;
+	Mix_Music* storyLine[3];
+} Music;
+
+typedef struct {
 	// Time
 	float dt;
 	// Gamemode
@@ -89,13 +104,16 @@ typedef struct {
 		// Platform: 
 		// platform[5] is jungle tileset
 	SDL_Texture* platform[6];
-		// Background
+	// Background
 	Background background[5];
 	// Label
 	SDL_Texture* label_lives;
 	SDL_Texture* label_health_potion;
 	// Fonts
 	TTF_Font* font;
+	// Sound
+	SoundEffect soundEffects;
+	Music soundTracks;
 	// Renderer
 	SDL_Renderer* renderer;
 	// Map

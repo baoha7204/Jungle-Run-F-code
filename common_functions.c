@@ -60,6 +60,9 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 					gameState->player.onLedge = 0;
 					gameState->player.dy = -9;
 				}
+				if (!Mix_Playing(-1)) {
+					Mix_PlayChannel(-1, &gameState->soundEffects.jump, 0);
+				}
 				break;
 			}
 		}
@@ -219,6 +222,16 @@ void clean(GameState* gameState, SDL_Window* window) {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(gameState->renderer);
 	TTF_Quit();
+	Mix_FreeChunk(gameState->soundEffects.electricHurt);
+	Mix_FreeChunk(gameState->soundEffects.getDamaged);
+	Mix_FreeChunk(gameState->soundEffects.ItemPickUp);
+	Mix_FreeChunk(gameState->soundEffects.jump);
+	Mix_FreeChunk(gameState->soundEffects.landing);
+	Mix_FreeChunk(gameState->soundEffects.spike);
+	Mix_FreeMusic(gameState->soundTracks.inGame);
+	Mix_FreeMusic(gameState->soundTracks.menu);
+	Mix_FreeMusic(gameState->soundTracks.storyLine);
+	Mix_Quit();
 	// Clean up
 	SDL_Quit();
 }

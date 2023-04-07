@@ -4,6 +4,7 @@
     <LocalDebuggerEnvironment>PATH=%PATH%;$(ProjectDir)External library\SDL2\lib\x64
 PATH=%PATH%;$(ProjectDir)External library\SDL2_image\lib\x64
 PATH=%PATH%;$(ProjectDir)External library\SDL2_ttf\lib\x64
+PATH=%PATH%;$(ProjectDir)External library\SDL2_mixer\lib\x64
 $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>

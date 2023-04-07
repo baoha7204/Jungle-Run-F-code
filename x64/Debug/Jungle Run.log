@@ -1,17 +1,8 @@
-﻿  map.c
-C:\Users\Admin\source\repos\Jungle Run\map.c(325,54): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(325,78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,91): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,116): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,89): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,113): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(341,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(342,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(343,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(369,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
-C:\Users\Admin\source\repos\Jungle Run\map.c(437,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
+﻿  load.c
+C:\Users\Admin\source\repos\Jungle Run\load.c(34,24): warning C4047: 'function': 'int' differs in levels of indirection from 'Mix_Music *'
+C:\Users\Admin\source\repos\Jungle Run\load.c(34,19): warning C4024: 'Mix_VolumeMusic': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\load.c(34,26): warning C4020: 'Mix_VolumeMusic': too many actual parameters
+C:\Users\Admin\source\repos\Jungle Run\load.c(54,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Admin\source\repos\Jungle Run\load.c(174,46): warning C4047: 'function': 'Mix_Music *' differs in levels of indirection from 'Mix_Music **'
+C:\Users\Admin\source\repos\Jungle Run\load.c(174,13): warning C4024: 'load_music': different types for formal and actual parameter 1
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe

@@ -10,8 +10,9 @@ void do_render(GameState* gameState) {
 	SDL_RenderClear(renderer);
 	if (gameState->statusState == STATUS_STATE_GAMEOVER) {
 		// draw background
-		drawBackground(gameState);
 		Over(gameState);
+		// Bad end showcase
+
 	}
 	else if (gameState->statusState == STATUS_STATE_GAME) {
 		// draw background
@@ -48,9 +49,12 @@ void do_render(GameState* gameState) {
 		render_giga_golem(gameState, gameState->golem);
 		// draw lives
 		render_status(gameState);
-		// Present the actual renderer
-		SDL_RenderPresent(renderer);
+		// Music
+		if (!Mix_PlayingMusic()) {
+			Mix_PlayMusic(gameState->soundTracks.inGame[2], -1);
+		}
 	}
+	SDL_RenderPresent(renderer);
 }
 
 void render_character_animation(GameState* gameState, SDL_Texture* texture[], const int width, const int height, int frame) {

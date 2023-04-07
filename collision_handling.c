@@ -53,6 +53,9 @@ void collision_detect_map(GameState* gameState, Map* map) {
 							gameState->player.lives--;
 							gameState->player.isImmortal = 1;
 							gameState->player.immortalStartTime = SDL_GetTicks64() / 1000.0f;
+							if (!Mix_Playing(-1)) {
+								Mix_PlayChannel(-1, gameState->soundEffects.getDamaged, 0);
+							}
 						}
 					}
 					else {

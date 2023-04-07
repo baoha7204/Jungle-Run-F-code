@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 	GameState gameState;
 	SDL_Window* window = NULL; // declare a window
 	SDL_Renderer* renderer = NULL; // declare a renderer
-	SDL_Init(SDL_INIT_VIDEO); // initialize SDL2
+	SDL_Init(SDL_INIT_EVERYTHING); // initialize SDL2
 	// FPS
 	Uint32 lastFrameTime = 0;
 	float framerate = 0.0f;
@@ -21,6 +21,8 @@ int main(int argc, char* argv[]) {
 	// Load game
 	gameState.renderer = renderer;
 	TTF_Init();
+	Mix_Init(MIX_INIT_MP3);
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
 	load_game(&gameState);
 	// Enter program loop (see SDL_PollEvent)
 	int done = 0;
@@ -45,7 +47,7 @@ int main(int argc, char* argv[]) {
 		// Calculate and print framerate
 		framerate = 1000.0f / elapsedTime;
 		gameState.dt = elapsedTime / 1000.0f;
-		printf("Framerate: %.2f\n", framerate);
+	//	printf("Framerate: %.2f\n", framerate);
 	}
 
 	// Close and destroy the window
