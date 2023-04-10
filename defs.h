@@ -8,7 +8,7 @@
 #define STATUS_STATE_TRUE_END 2
 #define STATUS_STATE_GOOD_END 3
 
-#define END_OF_GAME_POSITION 1 // position where if player.x >= END_OF_GAME_POSITION -> gameState.statusState = TRUE END || GOOD END
+#define END_OF_GAME_POSITION 25500 // position where if player.x >= END_OF_GAME_POSITION -> gameState.statusState = TRUE END || GOOD END
 #define GAMEMODE_SINGLEPLAYER 0
 #define GAMEMODE_MULTIPLAYER 1
 
@@ -49,7 +49,7 @@
 #define SMOL_GOLEM_SPEED 40
 #define SMOL_GOLEM_DETECT_RANGE 150
 #define GIGA_GOLEM_FRAMES 100
-#define GIGA_GOLEM_SPEED 50
+#define GIGA_GOLEM_SPEED 75
 
 #define WIDTH_GIGA_GOLEM 250
 #define HEIGHT_GIGA_GOLEM 250
@@ -86,4 +86,5 @@
 #define PLX_BACKGROUND_3 5
 #define PLX_BACKGROUND_4 4
 #define PLX_BACKGROUND_5 3
+
 #endif // !defs

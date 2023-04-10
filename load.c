@@ -2,6 +2,7 @@
 #include "map.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <math.h>
 
@@ -21,20 +22,6 @@ void load_texture(GameState* gameState, SDL_Texture* texture[], const char fileP
 	}
 }
 
-void load_sound_effect(Mix_Chunk* sound, const char filePath[]) {
-	sound = Mix_LoadWAV(filePath);
-	if (sound != NULL) {
-		Mix_VolumeChunk(sound, MIX_MAX_VOLUME);
-	}
-}
-
-void load_music(Mix_Music* music, const char filePath[]) {
-	music = Mix_LoadMUS(filePath);
-	if (music != NULL) {
-		Mix_VolumeMusic(music, MIX_MAX_VOLUME);
-	}
-}
-
 void load_background(GameState* gameState, SDL_Texture* texture[], const char filePath[], const int frame, int index) {
 	SDL_Surface* surface;
 	for (int i = 0; i < frame; i++) {
@@ -51,12 +38,15 @@ void load_background(GameState* gameState, SDL_Texture* texture[], const char fi
 }
 
 void load_game(GameState* gameState) {
-	srand(time(NULL));
+	TTF_Init();
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
+	Mix_Init(MIX_INIT_MP3);
+	SoundEffect* soundEffects = &gameState->soundEffects;
+	Music* soundTracks = &gameState->soundTracks;
 	// Init GameState
+	gameState->mode = GAMEMODE_SINGLEPLAYER;
 	gameState->dt = 0;
 	gameState->statusState = STATUS_STATE_GAME;
-	gameState->mode = GAMEMODE_SINGLEPLAYER; // will be handled later, which is selected by user
-	gameState->difficulty = DIFFICULTY_EASY; // will be handled later, which is selected by user
 	gameState->label_lives = NULL;
 	gameState->label_health_potion = NULL;
 	gameState->player.x = 500;
@@ -150,31 +140,33 @@ void load_game(GameState* gameState) {
 		exit(1);
 	}
 	// load sound
-	gameState->soundEffects.getDamaged = NULL;
-	gameState->soundEffects.electricHurt = NULL;
-	gameState->soundEffects.ItemPickUp = NULL;
-	gameState->soundEffects.jump = NULL;
-	gameState->soundEffects.landing = NULL;
-	gameState->soundEffects.spike = NULL;
-	load_sound_effect(gameState->soundEffects.getDamaged, "Resource\\Sound\\Sound Effects\\DamageSound.wav");
-	load_sound_effect(gameState->soundEffects.electricHurt, "Resource\\Sound\\Sound Effects\\ElectricHurtSound.wav");
-	load_sound_effect(gameState->soundEffects.ItemPickUp, "Resource\\Sound\\Sound Effects\\ItemPickupSound.wav");
-	load_sound_effect(gameState->soundEffects.jump, "Resource\\Sound\\Sound Effects\\jump.wav");
-	load_sound_effect(gameState->soundEffects.landing, "Resource\\Sound\\Sound Effects\\LandingSound.wav");
-	load_sound_effect(gameState->soundEffects.spike, "Resource\\Sound\\Sound Effects\\SpikeSound.wav");
+	soundEffects->getDamaged = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\DamageSound.wav");
+	if (soundEffects->getDamaged != NULL) {
+		Mix_VolumeChunk(soundEffects->getDamaged, 64);
+	}
+	soundEffects->electricHurt = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\ElectricHurtSound.wav");
+	if (soundEffects->electricHurt != NULL) {
+		Mix_VolumeChunk(soundEffects->electricHurt, 64);
+	}
+	soundEffects->ItemPickUp = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\ItemPickupSound.wav");
+	if (soundEffects->ItemPickUp != NULL) {
+		Mix_VolumeChunk(soundEffects->ItemPickUp, 96);
+	}
+	soundEffects->jump = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\jump.wav");
+	if (soundEffects->jump != NULL) {
+		Mix_VolumeChunk(soundEffects->jump, 16);
+	}
+	soundEffects->landing = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\LandingSound.wav");
+	if (soundEffects->landing != NULL) {
+		Mix_VolumeChunk(soundEffects->landing, 16);
+	}
+	soundEffects->spike = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\SpikeSound.wav");
+	if (soundEffects->spike != NULL) {
+		Mix_VolumeChunk(soundEffects->spike, 32);
+	}
 	// load music
-	gameState->soundTracks.inGame[0] = NULL;
-	gameState->soundTracks.inGame[1] = NULL;
-	gameState->soundTracks.inGame[2] = NULL;
-	gameState->soundTracks.menu = NULL;
-	gameState->soundTracks.storyLine[0] = NULL;
-	gameState->soundTracks.storyLine[1] = NULL;
-	load_music(gameState->soundTracks.inGame[0], "Resource\\Sound\\Soundtrack\\In Game 1.mp3");
-	load_music(gameState->soundTracks.inGame[1], "Resource\\Sound\\Soundtrack\\In Game 2.mp3");
-	load_music(&gameState->soundTracks.inGame[2], "Resource\\Sound\\Soundtrack\\In Game 3.mp3");
-	load_music(gameState->soundTracks.menu, "Resource\\Sound\\Soundtrack\\Main Menu.mp3");
-	load_music(gameState->soundTracks.storyLine[0], "Resource\\Sound\\Soundtrack\\Storyline 1.mp3");
-	// load_music(gameState->soundTracks.storyLine[1], "Resource\\Sound\\Soundtrack\\Storyline 2.mp3");
+	soundTracks->inGame[0] = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\In Game 3.mp3");
+	Mix_VolumeMusic(32);
 	// create a fixed map
 	if (gameState->mode == GAMEMODE_SINGLEPLAYER) {
 		drawMap_SingleplayerMode(gameState);

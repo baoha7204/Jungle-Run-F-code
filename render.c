@@ -5,14 +5,17 @@
 #include <math.h>
 #include "map.h"
 
-void do_render(GameState* gameState) {
+void do_render(GameState* gameState, int* done) {
 	SDL_Renderer* renderer = gameState->renderer;
 	SDL_RenderClear(renderer);
 	if (gameState->statusState == STATUS_STATE_GAMEOVER) {
-		// draw background
-		Over(gameState);
-		// Bad end showcase
-
+		Over(gameState, "Bad End", (SDL_Color) { 255, 0, 0, 255 }, done);
+	}
+	else if (gameState->statusState == STATUS_STATE_TRUE_END) {
+		Over(gameState, "True End", (SDL_Color) { 255, 255, 255, 255 }, done);
+	}
+	else if (gameState->statusState == STATUS_STATE_GOOD_END) {
+		Over(gameState, "Good End", (SDL_Color) { 0, 0, 0, 255 }, done);
 	}
 	else if (gameState->statusState == STATUS_STATE_GAME) {
 		// draw background
@@ -51,7 +54,7 @@ void do_render(GameState* gameState) {
 		render_status(gameState);
 		// Music
 		if (!Mix_PlayingMusic()) {
-			Mix_PlayMusic(gameState->soundTracks.inGame[2], -1);
+			Mix_PlayMusic(gameState->soundTracks.inGame[0], -1);
 		}
 	}
 	SDL_RenderPresent(renderer);

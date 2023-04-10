@@ -1,8 +1,19 @@
-﻿  load.c
-C:\Users\Admin\source\repos\Jungle Run\load.c(34,24): warning C4047: 'function': 'int' differs in levels of indirection from 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\load.c(34,19): warning C4024: 'Mix_VolumeMusic': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\load.c(34,26): warning C4020: 'Mix_VolumeMusic': too many actual parameters
-C:\Users\Admin\source\repos\Jungle Run\load.c(54,8): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\load.c(174,46): warning C4047: 'function': 'Mix_Music *' differs in levels of indirection from 'Mix_Music **'
-C:\Users\Admin\source\repos\Jungle Run\load.c(174,13): warning C4024: 'load_music': different types for formal and actual parameter 1
+﻿  common_functions.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(275,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[12]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(275,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(276,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[8]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(276,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(277,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[4]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(277,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(278,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[6]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(278,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(280,52): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(280,46): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(282,37): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[1]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(282,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(283,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(283,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(300,45): warning C4047: 'function': 'Mix_Music *' differs in levels of indirection from 'Mix_Music *[3]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(300,38): warning C4024: 'Mix_FreeMusic': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(102): warning C4715: 'processEvents': not all control paths return a value
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe

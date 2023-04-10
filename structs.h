@@ -1,5 +1,7 @@
 #ifndef STRUCTS
 #define STRUCTS
+#include "defs.h"
+#include <SDL_mixer.h>
 
 typedef struct {
 	float x;
@@ -58,14 +60,12 @@ typedef struct {
 
 typedef struct {
 	Mix_Music* inGame[3];
-	Mix_Music* menu;
-	Mix_Music* storyLine[3];
 } Music;
 
 typedef struct {
 	// Time
 	float dt;
-	// Gamemode
+	// difficulty
 	int mode, difficulty;
 	// Required items to achieve good ending
 	int health_potion_counter; // if = 5 -> good ending 

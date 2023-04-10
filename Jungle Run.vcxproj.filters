@@ -55,6 +55,9 @@
     <Filter Include="Source Files\render">
       <UniqueIdentifier>{a0ca499d-fb11-4b6a-8bd6-68a0401f35a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\menu">
+      <UniqueIdentifier>{caa3e7ca-26db-43d5-a86b-8c1febb65c94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -74,6 +77,18 @@
     </ClCompile>
     <ClCompile Include="render.c">
       <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.c">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="help.c">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="preGameplay.c">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="checkAccount.c">
+      <Filter>Source Files\menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +112,18 @@
     </ClInclude>
     <ClInclude Include="render.h">
       <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Source Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="help.h">
+      <Filter>Source Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="preGameplay.h">
+      <Filter>Source Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="checkAccount.h">
+      <Filter>Source Files\menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

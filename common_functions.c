@@ -1,10 +1,45 @@
 #include "common_functions.h"
 #include "load.h"
+#include "render.h"
+#include "collision_handling.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
 #include "map.h"
+
+void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) {
+	// FPS
+	Uint64 lastFrameTime = 0;
+	// Load game
+	gameState->renderer = renderer;
+	load_game(gameState);
+	// Enter program loop
+	int done = 0;
+	while (!done) {
+		Uint64 currentFrameTime = SDL_GetTicks64();
+		Uint64 elapsedTime = currentFrameTime - lastFrameTime;
+		lastFrameTime = currentFrameTime;
+		done = processEvents(window, gameState);
+
+		// detect ground floor (platform[2])
+		collision_detect_floor(gameState);
+
+		// detect map
+		for (int i = 0; i < gameState->map->counter; i++) {
+			collision_detect_map(gameState, &gameState->map[i]);
+		}
+
+		add_physics(gameState);
+
+		do_render(gameState, &done);
+
+		// Calculate and print framerate
+		gameState->dt = elapsedTime / 1000.0f;
+	}
+	// Close and destroy the window
+	clean(gameState, window);
+}
 
 int processEvents(SDL_Window* window, GameState* gameState) {
 	// Walking
@@ -60,9 +95,6 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 					gameState->player.onLedge = 0;
 					gameState->player.dy = -9;
 				}
-				if (!Mix_Playing(-1)) {
-					Mix_PlayChannel(-1, &gameState->soundEffects.jump, 0);
-				}
 				break;
 			}
 		}
@@ -71,36 +103,43 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 
 void add_physics(GameState* gameState) {
 	Object* player = &gameState->player;
-	if (gameState->player.isImmortal) {
+	if (player->isImmortal) {
 		immortal_events(gameState);
 	}
 	if (touchBoss(gameState) || player->lives == 0 || player->y>HEIGHT_WINDOW+250) { // gameover <-> bad ending
 		gameState->statusState = STATUS_STATE_GAMEOVER;
+		Mix_HaltMusic();
+		Mix_HaltChannel(-1);
 	}
-	//else if (player->x >= END_OF_GAME_POSITION) {
-	//	if (gameState->health_potion_counter < REQUIRED_HEALTH_POTION) {
-	//		gameState->statusState = STATUS_STATE_TRUE_END; // true ending
-	//	}
-	//	else if (gameState->health_potion_counter == REQUIRED_HEALTH_POTION) {
-	//		gameState->statusState = STATUS_STATE_GOOD_END; // good ending
-	//	}
-	//}
+	else if (player->x >= END_OF_GAME_POSITION) {
+		if (gameState->health_potion_counter < REQUIRED_HEALTH_POTION) {
+			gameState->statusState = STATUS_STATE_TRUE_END; // true ending
+		}
+		else if (gameState->health_potion_counter == REQUIRED_HEALTH_POTION) {
+			gameState->statusState = STATUS_STATE_GOOD_END; // good ending
+		}
+		Mix_HaltMusic();
+		Mix_HaltChannel(-1);
+	}
 	player->x += player->dx;
 	player->y += player->dy;
 	player->dy += GRAVITY;
 	if (!player->onLedge) {
 		if (player->dy < 0) {
-			gameState->player.status = 2;
+			player->status = 2;
+			if (!Mix_Playing(1)) {
+				Mix_PlayChannel(1, gameState->soundEffects.jump, 0);
+			}
 		}
 		else if (player->dy == 0) {
-			gameState->player.status = 3;
+			player->status = 3;
 		}
 		else {
-			gameState->player.status = 4;
+			player->status = 4;
 		}
 	}
 	// scrolling
-	gameState->scrollX = -gameState->player.x + 350;
+	gameState->scrollX = -player->x + 350;
 	if (gameState->scrollX > 0) {
 		gameState->scrollX = 0;
 	}
@@ -114,7 +153,7 @@ int animation_smoothness(int frame, const int frames) {
 }
 
 void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
-	SDL_SetRenderTarget(&gameState->renderer, texture);
+	SDL_SetRenderTarget(gameState->renderer, texture);
 	// Set the color modulation to red
 	SDL_SetTextureColorMod(texture, 255, 0, 0);
 	// Render the texture to the renderer at the specified location
@@ -181,11 +220,15 @@ int touchBoss(GameState* gameState) { // return true if touched, false if not to
 	return 0;
 }
 
-int Over(GameState* gameState) {
+void Over(GameState* gameState, const char str[], SDL_Color fg, int* done) {
+	// background 
+	for (int i = 0; i < 5; i++) {
+		SDL_RenderCopy(gameState->renderer, gameState->background[i].layer[0], NULL, NULL);
+	}
 	gameState->font = NULL;
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\Kanit-Light.ttf", 72);
 	SDL_Rect textRect;
-	SDL_Surface* textSurface = TTF_RenderText_Solid(gameState->font, "Game Over", (SDL_Color) { 255, 0, 0, 255 });
+	SDL_Surface* textSurface = TTF_RenderText_Solid(gameState->font, str, fg);
 	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(gameState->renderer, textSurface);
 	SDL_FreeSurface(textSurface);
 	SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
@@ -193,11 +236,37 @@ int Over(GameState* gameState) {
 	textRect.y = (HEIGHT_WINDOW - textRect.h) / 2;
 	SDL_RenderCopy(gameState->renderer, textTexture, NULL, &textRect);
 	SDL_RenderPresent(gameState->renderer);
+	SDL_Delay(2000);
+	// Display text: press R to retry, press X to return menu
+	TTF_Font* informativeText = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
+	SDL_Rect informativeRect;
+	textSurface = TTF_RenderText_Solid(informativeText, "Press R to retry, X to return menu", (SDL_Color){71, 66 , 63, 255});
+	SDL_Texture* informativeTexture = SDL_CreateTextureFromSurface(gameState->renderer, textSurface);
+	SDL_FreeSurface(textSurface);
+	SDL_QueryTexture(informativeTexture, NULL, NULL, &informativeRect.w, &informativeRect.h);
+	informativeRect.x = 0;
+	informativeRect.y = HEIGHT_WINDOW - informativeRect.h;
+	SDL_RenderPresent(gameState->renderer);
+	// handle events
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		// Interact with keyboard
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_r: // retry
+				gameState->statusState = STATUS_STATE_GAME;
+				break;
+			case SDLK_x: // return menu
+				*done = 1;
+				break;
+			}
+		}
+	}
 }
 
 void immortal_events(GameState* gameState) {
 	float currentTime = SDL_GetTicks64() / 1000.0f;
-	if (currentTime - gameState->player.immortalStartTime >= 3) {
+	if (currentTime - gameState->player.immortalStartTime >= 2.0f) {
 		gameState->player.isImmortal = 0;
 	}
 }
@@ -229,8 +298,6 @@ void clean(GameState* gameState, SDL_Window* window) {
 	Mix_FreeChunk(gameState->soundEffects.landing);
 	Mix_FreeChunk(gameState->soundEffects.spike);
 	Mix_FreeMusic(gameState->soundTracks.inGame);
-	Mix_FreeMusic(gameState->soundTracks.menu);
-	Mix_FreeMusic(gameState->soundTracks.storyLine);
 	Mix_Quit();
 	// Clean up
 	SDL_Quit();

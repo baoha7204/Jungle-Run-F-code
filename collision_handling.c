@@ -45,6 +45,8 @@ void collision_detect_map(GameState* gameState, Map* map) {
 						else if (map->ledges[i][j].itemType == ITEM_TYPE_HEALTH_POTION) {
 							gameState->health_potion_counter++;
 						}
+						// sound effect
+						Mix_PlayChannel(-1, gameState->soundEffects.ItemPickUp, 0);
 					}
 					if (!map->ledges[i][j].isBlocked) {
 						if (map->ledges[i][j].isLethal && !gameState->player.isImmortal) {
@@ -53,7 +55,15 @@ void collision_detect_map(GameState* gameState, Map* map) {
 							gameState->player.lives--;
 							gameState->player.isImmortal = 1;
 							gameState->player.immortalStartTime = SDL_GetTicks64() / 1000.0f;
-							if (!Mix_Playing(-1)) {
+							// sound effects
+							if (map->pos[i][j] >= 15 && map->pos[i][j] <= 18) {
+								Mix_PlayChannel(-1, gameState->soundEffects.electricHurt, 0);
+							}
+							else if (map->pos[i][j] >= 8 && map->pos[i][j] <= 10) {
+								Mix_PlayChannel(-1, gameState->soundEffects.spike, 0);
+							}
+							else {
+								// delay?
 								Mix_PlayChannel(-1, gameState->soundEffects.getDamaged, 0);
 							}
 						}
@@ -69,7 +79,7 @@ void collision_detect_map(GameState* gameState, Map* map) {
 }
 
 void collision_correction(GameState* gameState, float px, float py, float pw, float ph, float bx, float by, float bw, float bh) {
-	if (py + ph / 2 > by && py < by + bh) {
+	if (py + 0.2*ph > by && py < by + bh) {
 		//rubbing against right edge 
 		if (px< (bx + bw) && (px + pw)>(bx + bw) && gameState->player.dx < 0) {
 			// correct x
@@ -100,7 +110,9 @@ void collision_correction(GameState* gameState, float px, float py, float pw, fl
 		if (py + ph > by && py < by && gameState->player.dy > 0) {
 			// correct y
 			gameState->player.y = by - ph;
-
+			if (!gameState->player.onLedge) {
+				Mix_PlayChannel(-1, gameState->soundEffects.landing, 0);
+			}
 			// stop any jump velocity
 			gameState->player.dy = 0;
 			gameState->player.onLedge = 1;
