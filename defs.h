@@ -3,10 +3,10 @@
 #define WIDTH_WINDOW 1200
 #define HEIGHT_WINDOW 800
 
-#define STATUS_STATE_GAME 0
-#define STATUS_STATE_GAMEOVER 1 // gameover = bad end
-#define STATUS_STATE_TRUE_END 2
-#define STATUS_STATE_GOOD_END 3
+#define STATUS_STATE_GAME 3
+#define STATUS_STATE_GAMEOVER 0 // gameover = bad end
+#define STATUS_STATE_TRUE_END 1
+#define STATUS_STATE_GOOD_END 2
 
 #define END_OF_GAME_POSITION 25500 // position where if player.x >= END_OF_GAME_POSITION -> gameState.statusState = TRUE END || GOOD END
 #define GAMEMODE_SINGLEPLAYER 0

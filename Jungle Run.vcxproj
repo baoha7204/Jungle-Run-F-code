@@ -73,6 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(ProjectDir)External library\SDL2\include;$(ProjectDir)External library\SDL2_ttf\include;$(ProjectDir)External library\SDL2_image\include;$(ProjectDir)External library\SDL2_mixer\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)External library\SDL2_image\lib\x64;$(ProjectDir)External library\SDL2\lib\x64;$(ProjectDir)External library\SDL2_ttf\lib\x64;$(ProjectDir)External library\SDL2_mixer\lib\x64;$(LibraryPath)</LibraryPath>
+    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,7 +111,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>

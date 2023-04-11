@@ -4,13 +4,17 @@
 #include <SDL_mixer.h>
 #include <SDL_image.h>
 #include <string.h>
+#include <stdlib.h>
 
 char selectMode[10] = "Easy";   // global variable 
 int numMode = 0;
 int* ptrNumMode = &numMode;
 
 void accountDisplay(GameState* gameState) {
-
+	if (!gameState->setDifficulty) {
+		gameState->setDifficulty = 1;
+		gameState->difficulty = DIFFICULTY_EASY;
+	}
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 	TTF_Font* font = NULL;
@@ -28,12 +32,16 @@ void accountDisplay(GameState* gameState) {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024);
-
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
+	if (!Mix_PlayingMusic()) {
+		Mix_Music* music = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\MainMenu2.mp3");
+		Mix_VolumeMusic(32);
+		Mix_PlayMusic(music, -1);
+	}
 	window = SDL_CreateWindow("Jungle Run", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 960, 668, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
 	bgSurface = SDL_LoadBMP("Resource\\Menu\\LoginImage\\ChooseBG.bmp");
 	bgTexture = SDL_CreateTextureFromSurface(renderer, bgSurface);
@@ -84,6 +92,7 @@ void accountDisplay(GameState* gameState) {
 					SDL_FreeSurface(menuSurface[i]);
 				}
 				quit = true;
+				exit(EXIT_SUCCESS);
 				break;
 			case SDL_MOUSEMOTION:
 				x = event.motion.x; y = event.motion.y;
@@ -138,7 +147,7 @@ void accountDisplay(GameState* gameState) {
 					y >= pos[3].y && y <= pos[3].y + pos[3].h) {
 					Mix_PlayChannel(-1, clickSound, 0);
 					SDL_RenderClear(renderer);
-					helpDisplay(window, renderer);
+					helpDisplay(window, renderer, gameState);
 				}
 				if (x >= pos[0].x && x <= pos[0].x + pos[0].w &&
 					y >= pos[0].y && y <= pos[0].y + pos[0].h) {
@@ -255,7 +264,7 @@ void loginDisplay(GameState* gameState) {
     window = SDL_CreateWindow("Jungle Run", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 960, 668, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+    Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
     // load image
     SDL_Rect imageRect;
@@ -869,7 +878,6 @@ void registerDisplay(GameState* gameState) {
 	SDL_Surface* arrowSurface = NULL;
 	SDL_Texture* arrowTexture = NULL;
 
-
 	SDL_Rect userRect;
 	userRect.x = 313;
 	userRect.y = 231;
@@ -934,7 +942,7 @@ void registerDisplay(GameState* gameState) {
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
 	//load background
 	imageSurface = SDL_LoadBMP("Resource\\Menu\\LoginImage\\RegisterBG.bmp");
@@ -1776,7 +1784,7 @@ void QRcode(SDL_Window* window, SDL_Renderer* renderer, GameState* gameState) {
 	SDL_Rect qrRect = { 398 , 255 , 170 , 170 };
 	SDL_Rect logoRect = { 328 , 300 , 60 , 60 };
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 	char thanks[50] = "";
 	sprintf_s(thanks, sizeof(thanks), "^^Thank You For Your Donation^^");
 
@@ -1911,7 +1919,7 @@ void storyDisplay(SDL_Window* window, SDL_Renderer* renderer, GameState* gameSta
 
 	int page = 1;
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
 	storySurface[0] = SDL_LoadBMP("Resource\\Menu\\Story\\story1.bmp");
 	storySurface[1] = SDL_LoadBMP("Resource\\Menu\\Story\\story2.bmp");
@@ -2087,7 +2095,7 @@ void gameMode(SDL_Window* window, SDL_Renderer* renderer, char selectMode[], int
 	modeRect[2].x = 435; // hard
 	modeRect[2].y = 265;
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
 	char* arrow[2] = { "<<" , ">>" };
 	char* mode[3] = { "Easy" , "Medium" , "Hard" };
@@ -2231,12 +2239,15 @@ void gameMode(SDL_Window* window, SDL_Renderer* renderer, char selectMode[], int
 					memset(selectMode, '\0', 10);
 					strcpy(selectMode, mode[*(ptrNumMode)]);
 					if (strcmp(selectMode, "Easy") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_EASY;
 					}
 					else if (strcmp(selectMode, "Medium") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_MEDIUM;
 					}
 					else if (strcmp(selectMode, "Hard") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_HARD;
 					}
 					SDL_RenderCopy(renderer, trickTexture, NULL, &trickRect);
@@ -2261,12 +2272,15 @@ void gameMode(SDL_Window* window, SDL_Renderer* renderer, char selectMode[], int
 					memset(selectMode, '\0', 10);
 					strcpy(selectMode, mode[*(ptrNumMode)]);
 					if (strcmp(selectMode, "Easy") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_EASY;
 					}
 					else if (strcmp(selectMode, "Medium") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_MEDIUM;
 					}
 					else if (strcmp(selectMode, "Hard") == 0) {
+						gameState->setDifficulty = 1;
 						gameState->difficulty = DIFFICULTY_HARD;
 					}
 					SDL_RenderCopy(renderer, trickTexture, NULL, &trickRect);

@@ -9,13 +9,13 @@ void do_render(GameState* gameState, int* done) {
 	SDL_Renderer* renderer = gameState->renderer;
 	SDL_RenderClear(renderer);
 	if (gameState->statusState == STATUS_STATE_GAMEOVER) {
-		Over(gameState, "Bad End", (SDL_Color) { 255, 0, 0, 255 }, done);
+		Over(gameState, "Bad End", (SDL_Color) { 210, 8, 45, 255 }, done);
 	}
 	else if (gameState->statusState == STATUS_STATE_TRUE_END) {
-		Over(gameState, "True End", (SDL_Color) { 255, 255, 255, 255 }, done);
+		Over(gameState, "True End", (SDL_Color) { 200, 112, 126, 255 }, done);
 	}
 	else if (gameState->statusState == STATUS_STATE_GOOD_END) {
-		Over(gameState, "Good End", (SDL_Color) { 0, 0, 0, 255 }, done);
+		Over(gameState, "Good End", (SDL_Color) { 96, 106, 116, 255 }, done);
 	}
 	else if (gameState->statusState == STATUS_STATE_GAME) {
 		// draw background
@@ -50,7 +50,7 @@ void do_render(GameState* gameState, int* done) {
 		}
 		// draw giga golem
 		render_giga_golem(gameState, gameState->golem);
-		// draw lives
+		// draw status
 		render_status(gameState);
 		// Music
 		if (!Mix_PlayingMusic()) {

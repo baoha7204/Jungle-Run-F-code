@@ -1,5 +1,6 @@
 #include "preGameplay.h"
 #include "common_functions.h"
+#include "menu.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -66,7 +67,6 @@ void UpdateText(SDL_Renderer* renderer, int charNumber, int lineNumber) {
 }
 
 void PreGameplay(GameState* gameState) {
-
 	SDL_Window* window = NULL;
 	SDL_Renderer* renderer = NULL;
 
@@ -76,9 +76,9 @@ void PreGameplay(GameState* gameState) {
 	window = SDL_CreateWindow("Jungle Run", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH_WINDOW, HEIGHT_WINDOW, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	Mix_Music* music = Mix_LoadMUS("Resource\\Sound\\SoundEffects\\typing.mp3");
+	Mix_Music* music = Mix_LoadMUS("Resource\\Sound\\Sound Effects\\typing.mp3");
 	Mix_PlayMusic(music, -1);
-
+	Mix_VolumeMusic(64);
 	lineRect[0].x = 120;
 	lineRect[0].y = 76;
 
@@ -133,7 +133,6 @@ void PreGameplay(GameState* gameState) {
 
 	blackSurface = NULL;
 	whitebarSurface = NULL;
-
 	SDL_RenderClear(renderer);
 	SDL_Event event;
 	bool quit = false;
@@ -169,7 +168,8 @@ void PreGameplay(GameState* gameState) {
 					SDL_DestroyTexture(blackbarTexture);
 					SDL_DestroyTexture(inforTexture);
 					SDL_RenderClear(renderer);
-					gamePlay(renderer, window, gameState);
+					gamePlay(gameState, renderer, window);
+					accountDisplay(gameState);
 				}
 				break;
 			}
@@ -185,7 +185,6 @@ void PreGameplay(GameState* gameState) {
 		if (charNumber < strlen(story[lineNumber])) {
 			charNumber += 5;
 		}
-
 		if (lineNumber < 7) {
 			UpdateText(renderer, charNumber, lineNumber);
 			underlineRect.x += 44;
@@ -193,8 +192,8 @@ void PreGameplay(GameState* gameState) {
 		}
 		if (lineNumber >= 7) {
 			Mix_HaltMusic();
-			SDL_Delay(3000);
-			gamePlay(renderer, window, gameState);
+			gamePlay(gameState, renderer, window);
+			accountDisplay(gameState);
 		}
 	}
 }

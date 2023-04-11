@@ -36,9 +36,8 @@ SDL_Rect healthRect, goodRect, runningRect, jumpingRect, ceilingRect, fireRect, 
 // health object
 void getHealthSurface(SDL_Surface* images[]) {
 	for (int i = 0; i < 7; i++) {
-		char filename[30] = "";
-		sprintf_s(filename, sizeof(filename), "Resource\\item\\health%d.bmp", i + 1);
-		//printf("%s\n", filename);
+		char filename[50] = "";
+		sprintf_s(filename, sizeof(filename), "Resource\\Menu\\item\\health%d.bmp", i + 1);
 		images[i] = SDL_LoadBMP(filename);
 		SDL_SetColorKey(images[i], SDL_TRUE, SDL_MapRGB(images[i]->format, 0, 0, 0));
 	}
@@ -47,9 +46,8 @@ void getHealthSurface(SDL_Surface* images[]) {
 // good ending object
 void getGoodSurface(SDL_Surface* images[]) {
 	for (int i = 0; i < 8; i++) {
-		char filename[30] = "";
-		sprintf_s(filename, sizeof(filename), "Resource\\item\\good%d.bmp", i + 1);
-		//printf("%s\n", filename);
+		char filename[50] = "";
+		sprintf_s(filename, sizeof(filename), "Resource\\Menu\\item\\good%d.bmp", i + 1);
 		images[i] = SDL_LoadBMP(filename);
 		SDL_SetColorKey(images[i], SDL_TRUE, SDL_MapRGB(images[i]->format, 0, 0, 0));
 	}
@@ -58,8 +56,8 @@ void getGoodSurface(SDL_Surface* images[]) {
 
 void getRunningSurface(SDL_Surface* images[]) {
 	for (int i = 0; i < 8; i++) {
-		char filename[30] = "";
-		sprintf_s(filename, sizeof(filename), "Resource\\running\\run%d.bmp", i + 1);
+		char filename[50] = "";
+		sprintf_s(filename, sizeof(filename), "Resource\\Menu\\running\\run%d.bmp", i + 1);
 		//printf("%s\n", filename);
 		images[i] = SDL_LoadBMP(filename);
 	}
@@ -67,8 +65,8 @@ void getRunningSurface(SDL_Surface* images[]) {
 
 void getJumpingSurface(SDL_Surface* images[]) {
 	for (int i = 0; i < 5; i++) {
-		char filename[30] = "";
-		sprintf_s(filename, sizeof(filename), "Resource\\jump\\jump%d.bmp", i + 1);
+		char filename[50] = "";
+		sprintf_s(filename, sizeof(filename), "Resource\\Menu\\jump\\jump%d.bmp", i + 1);
 		//printf("%s\n", filename);
 		images[i] = SDL_LoadBMP(filename);
 	}
@@ -174,27 +172,27 @@ void helpDisplay(SDL_Window* window, SDL_Renderer* renderer, GameState* gameStat
 	SDL_Color black = { 0, 0 , 0,255 };
 	SDL_Color aqua = { 0 , 255 , 255 , 255 };
 
-	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\SoundEffects\\click.wav");
+	Mix_Music* clickSound = Mix_LoadWAV("Resource\\Sound\\Sound Effects\\click.wav");
 
-	helpSurface = SDL_LoadBMP("Resource\\LoginImage\\help.bmp");
+	helpSurface = SDL_LoadBMP("Resource\\Menu\\LoginImage\\help.bmp");
 	helpTexture = SDL_CreateTextureFromSurface(renderer, helpSurface);
 	SDL_RenderCopy(renderer, helpTexture, NULL, NULL);
 
 	// ceiling , fire , saw , ground , lightning 
 
-	fireSurface = SDL_LoadBMP("Resource\\traps\\fire.bmp");
+	fireSurface = SDL_LoadBMP("Resource\\Menu\\traps\\fire.bmp");
 	fireTexture = SDL_CreateTextureFromSurface(renderer, fireSurface);
 
-	sawSurface = SDL_LoadBMP("Resource\\traps\\saw.bmp");
+	sawSurface = SDL_LoadBMP("Resource\\Menu\\traps\\saw.bmp");
 	sawTexture = SDL_CreateTextureFromSurface(renderer, sawSurface);
 
-	groundSurface = SDL_LoadBMP("Resource\\traps\\ground.bmp");
+	groundSurface = SDL_LoadBMP("Resource\\Menu\\traps\\ground.bmp");
 	groundTexture = SDL_CreateTextureFromSurface(renderer, groundSurface);
 
-	lightningSurface = SDL_LoadBMP("Resource\\traps\\lightning.bmp");
+	lightningSurface = SDL_LoadBMP("Resource\\Menu\\traps\\lightning.bmp");
 	lightningTexture = SDL_CreateTextureFromSurface(renderer, lightningSurface);
 
-	ceilingSurface = SDL_LoadBMP("Resource\\traps\\ceiling.bmp");
+	ceilingSurface = SDL_LoadBMP("Resource\\Menu\\traps\\ceiling.bmp");
 	ceilingTexture = SDL_CreateTextureFromSurface(renderer, ceilingSurface);
 
 
@@ -203,7 +201,6 @@ void helpDisplay(SDL_Window* window, SDL_Renderer* renderer, GameState* gameStat
 	returnTexture = SDL_CreateTextureFromSurface(renderer, returnSurface);
 	SDL_QueryTexture(returnTexture, NULL, NULL, &returnRect.w, &returnRect.h);
 	SDL_RenderCopy(renderer, returnTexture, NULL, &returnRect);
-
 	// get surface
 	getHealthSurface(healthSurface);
 	getGoodSurface(goodSurface);

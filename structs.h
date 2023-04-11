@@ -1,7 +1,10 @@
 #ifndef STRUCTS
 #define STRUCTS
 #include "defs.h"
+#include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
 typedef struct {
 	float x;
@@ -60,13 +63,14 @@ typedef struct {
 
 typedef struct {
 	Mix_Music* inGame[3];
+	Mix_Music* ending[3];
 } Music;
 
 typedef struct {
 	// Time
-	float dt;
+	float dt, overTiming, bossStart;
 	// difficulty
-	int mode, difficulty;
+	int mode, difficulty, setDifficulty;
 	// Required items to achieve good ending
 	int health_potion_counter; // if = 5 -> good ending 
 	// draw key map
@@ -74,7 +78,7 @@ typedef struct {
 	// Scroll offset
 	float scrollX;
 	// status state
-	int statusState;
+	int statusState, isOver;
 	// Giga golem
 	Golem gigaGolem;
 	// Players

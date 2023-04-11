@@ -46,7 +46,7 @@ int checkPassword(char username[], char pass[]) {
 
     file = fopen("user.txt", "r");
 
-    while (fgets(buffer[i], 100, file)) {
+    while (fgets(buffer, 100, file)) {
         buffer[i][strcspn(buffer[i], "\n")] = '\0';
         i++;
     }

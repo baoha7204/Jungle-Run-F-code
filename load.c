@@ -46,6 +46,7 @@ void load_game(GameState* gameState) {
 	// Init GameState
 	gameState->mode = GAMEMODE_SINGLEPLAYER;
 	gameState->dt = 0;
+	gameState->overTiming = 0;
 	gameState->statusState = STATUS_STATE_GAME;
 	gameState->label_lives = NULL;
 	gameState->label_health_potion = NULL;
@@ -62,6 +63,7 @@ void load_game(GameState* gameState) {
 	gameState->isKeyObtained = 0;
 	gameState->flag = 0;
 	// Init giga golem
+	gameState->bossStart = SDL_GetTicks64() / 1000.0f;
 	gameState->gigaGolem.flip = 0;
 	gameState->gigaGolem.d.x = 0;
 	gameState->gigaGolem.pos.x = 0;
@@ -77,6 +79,7 @@ void load_game(GameState* gameState) {
 	gameState->scrollX = 0;
 	gameState->map->counter = 0;
 	gameState->player.isTakenDamage = 0;
+	gameState->isOver = 0;
 	// Load images and create rendering pictures from them
 	// Create character with Idle movement
 	load_texture(gameState, gameState->idle_anim, "Resource\\Character\\Idle\\Idle_%d.png", 12);
@@ -166,6 +169,9 @@ void load_game(GameState* gameState) {
 	}
 	// load music
 	soundTracks->inGame[0] = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\In Game 3.mp3");
+	soundTracks->ending[STATUS_STATE_GAMEOVER] = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\Bad Ending.mp3");
+	soundTracks->ending[STATUS_STATE_TRUE_END] = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\True Ending.mp3");
+	soundTracks->ending[STATUS_STATE_GOOD_END] = Mix_LoadMUS("Resource\\Sound\\Soundtrack\\Good Ending.mp3");
 	Mix_VolumeMusic(32);
 	// create a fixed map
 	if (gameState->mode == GAMEMODE_SINGLEPLAYER) {
