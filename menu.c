@@ -345,9 +345,9 @@ void loginDisplay(GameState* gameState) {
 
     while (!done) {
         while (SDL_PollEvent(&event)) {
-
             if (event.type == SDL_QUIT) {
                 done = 1;
+				exit(EXIT_SUCCESS);
             }
             else
                 if (event.type == SDL_MOUSEBUTTONDOWN) {
@@ -1780,7 +1780,7 @@ void QRcode(SDL_Window* window, SDL_Renderer* renderer, GameState* gameState) {
 	SDL_Color black = { 0  , 0 , 0 , 255 };
 	SDL_Color red = { 255  , 0 , 0 , 255 };
 	SDL_Color orange = { 0  , 255 , 0 , 255 };
-	SDL_Color blue = { 0 , 0 , 255 , 255 };
+	SDL_Color blue = { 0 , 255 , 255 , 255 };
 	SDL_Rect qrRect = { 398 , 255 , 170 , 170 };
 	SDL_Rect logoRect = { 328 , 300 , 60 , 60 };
 

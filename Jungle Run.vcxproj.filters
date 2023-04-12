@@ -22,9 +22,6 @@
     <Filter Include="Resource Files\Character animation\Run">
       <UniqueIdentifier>{a5f66b46-3885-48d7-b652-6b18a8692d9a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Character animation\Ledge Grab">
-      <UniqueIdentifier>{8ef21bff-a56e-42dd-92b7-da60727a5479}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Character animation\Jump">
       <UniqueIdentifier>{b9ee5dea-d33b-4208-88f3-ce311ed3cb89}</UniqueIdentifier>
     </Filter>
@@ -162,24 +159,6 @@
     </Image>
     <Image Include="Resource\Character\Idle\Idle_11.png">
       <Filter>Resource Files\Character animation\Idle</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_0.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_1.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_2.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_3.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_4.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
-    </Image>
-    <Image Include="Resource\Character\Ledge Grab\Ledge Grab_5.png">
-      <Filter>Resource Files\Character animation\Ledge Grab</Filter>
     </Image>
     <Image Include="Resource\Character\Jump\Jump_1.png">
       <Filter>Resource Files\Character animation\Jump</Filter>

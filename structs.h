@@ -21,7 +21,6 @@ typedef struct {
 	float x, y;
 	float dx, dy;
 	short lives;
-	char* name;
 	int isTakenDamage;
 	// imomortal event
 	int isImmortal;
@@ -36,12 +35,12 @@ typedef struct {
 	int isItem, itemType, isObtained;
 	int isLethal; // 0 = false, 1 = true
 	int isBlocked; // 0 = false, 1 = true
+	int isIgnored; // 0 = false, 1 = true
 	Golem smolGolem;
 } Ledge;
 
 typedef struct {
 	float x, y;// x, y position to start drawing map
-	int counter; // number of maps created actually
 	int pos[MAP_HEIGHT][MAP_WIDTH]; // tilesmap
 	Ledge ledges[MAP_HEIGHT][MAP_WIDTH];
 } Map;
@@ -121,6 +120,7 @@ typedef struct {
 	// Renderer
 	SDL_Renderer* renderer;
 	// Map
-	Map map[20];
+	Map map[17];
+	int mapCounter; // number of maps created actually
 } GameState;
 #endif // !stucts

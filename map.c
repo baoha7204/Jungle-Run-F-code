@@ -1,8 +1,10 @@
 #include "map.h"
 #include <stdio.h>
 #include "structs.h"
+#include <stdlib.h>
+#include <time.h>
 
-void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
+void loadMap(GameState* gameState, Map* map, int arr[][MAP_WIDTH], float x, float y) {
 	for (int row = 0; row < MAP_HEIGHT; row++) {
 		for (int col = 0; col < MAP_WIDTH; col++) {
 			map->pos[row][col] = arr[row][col];
@@ -17,6 +19,7 @@ void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
 			map->ledges[row][col].isObtained = 0;
 			map->ledges[row][col].smolGolem.d.x = 0;
 			map->ledges[row][col].smolGolem.flip = 0;
+			map->ledges[row][col].isIgnored = 0;
 			switch (map->pos[row][col]) {
 			case 3:
 				map->ledges[row][col].w = WIDTH_PLATFORM_6 * 3;
@@ -52,6 +55,14 @@ void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
 				map->ledges[row][col].isBlocked = 0;
 				map->ledges[row][col].isItem = 1;
 				map->ledges[row][col].itemType = ITEM_TYPE_FIRST_AID_KIT;
+				if (gameState->difficulty == DIFFICULTY_MEDIUM) {
+					// Generate a random number between 1 and 10
+					int r = rand() % 10 + 1;
+					// If the random number is greater than 5, first aid kit is not generated
+					if (r > 5) {
+						map->ledges[row][col].isIgnored = 1;
+					}
+				}
 				break;
 			case 14:
 				map->ledges[row][col].isBlocked = 0;
@@ -84,11 +95,17 @@ void loadMap(Map* map, int arr[][MAP_WIDTH], float x, float y) {
 	}
 }
 
-void drawMap(GameState* gameState, Map* map) {
+void drawMap(GameState* gameState, Map map[]) {
 	SDL_Rect srcRect;
 	int smoothness = 0;
 	for (int row = 0; row < MAP_HEIGHT; row++) {
 		for (int col = 0; col < MAP_WIDTH; col++) {
+			if (gameState->difficulty == DIFFICULTY_HARD && map->pos[row][col] == 13) {
+				continue;
+			}
+			else if (gameState->difficulty == DIFFICULTY_MEDIUM && map->pos[row][col] == 13 && map->ledges[row][col].isIgnored) {
+				continue;
+			}
 			switch (map->pos[row][col]) {
 			case 1:
 				srcRect = (SDL_Rect){ 63, 128, WIDTH_PLATFORM_6, HEIGHT_PLATFORM_6 };
@@ -374,55 +391,61 @@ void drawMap_SingleplayerMode(GameState* gameState) {
 	gameState->ledges[0].y = HEIGHT_WINDOW - HEIGHT_PLATFORM_3;
 	gameState->ledges[0].isLethal = 0;
 	gameState->ledges[0].isBlocked = 1;
+	gameState->ledges[0].isItem = ITEM_TYPE_NORMAL;
+	gameState->ledges[0].itemType = 0;
+	gameState->ledges[0].isObtained = 0;
+	gameState->ledges[0].smolGolem.d.x = 0;
+	gameState->ledges[0].smolGolem.flip = 0;
+	gameState->ledges[0].isIgnored = 0;
 	for (int i = 1; i < NUM_OF_LEDGES; i++) {
 		int additionalDis = 0;
 		if (i == 3) { // lv0 - parkour
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv0, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv0, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 5) { // lv1 - fire trap
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv1, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 7) { // lv2 - parkour with trap
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv2, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv2, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 9) { // lv3 - ceiling trap
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv3, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv3, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 11) { // lv4 - saw trap
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv4, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv4, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 13) { // lv5 + lv6 - pretty hard with lightning trap
 			additionalDis = 2 * WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv5, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			loadMap(&map[map->counter++], lv6, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv5, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv6, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 		}
 		else if (i == 15) { // lv7 + lv8
 			additionalDis = 2 * WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv7, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			loadMap(&map[map->counter++], lv8, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv7, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv8, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 		}
 		else if (i == 17) { // lv9 - bot golem
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv9, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv9, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 19) { // lv10
 			additionalDis = WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv10, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv10, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
 		}
 		else if (i == 21) { // lv11 + lv12
 			additionalDis = 2 * WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv11, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			loadMap(&map[map->counter++], lv12, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv11, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv12, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 		}
 		else if (i == 23) { // lv13 + lv14/lv15
 			additionalDis = 2 * WIDTH_WINDOW;
-			loadMap(&map[map->counter++], lv13, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
-			loadMap(&map[map->counter++], lv15, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv13, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3, 0);
+			loadMap(gameState, &map[gameState->mapCounter++], lv15, gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 		}
 		gameState->ledges[i].x = gameState->ledges[i - 1].x + WIDTH_PLATFORM_3 + additionalDis;
 		gameState->ledges[i].y = HEIGHT_WINDOW - HEIGHT_PLATFORM_3;
@@ -436,6 +459,6 @@ void drawMap_SingleplayerMode(GameState* gameState) {
 void draw_key_map(GameState* gameState, int ledgeNumber) {
 	Map* map = &gameState->map;
 	const int MAX_MAP = 15;
-	loadMap(&map[MAX_MAP - 1], lv14, gameState->ledges[ledgeNumber - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
+	loadMap(gameState, &map[MAX_MAP - 1], lv14, gameState->ledges[ledgeNumber - 1].x + WIDTH_PLATFORM_3 + WIDTH_WINDOW, 0);
 	gameState->flag = 1;
 }

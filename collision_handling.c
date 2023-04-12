@@ -1,6 +1,8 @@
 #include "collision_handling.h"
 #include "load.h"
 #include "map.h"
+#include <stdlib.h>
+#include <time.h>
 
 void collision_detect_floor(GameState* gameState) {
 	// prevent from falling out the window
@@ -17,6 +19,16 @@ void collision_detect_map(GameState* gameState, Map* map) {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			if (map->pos[i][j] != 0) {
+				if (gameState->difficulty == DIFFICULTY_HARD) {
+					if (map->pos[i][j] == 13) { 
+						continue; // first aid kit being eliminated
+					}
+				}
+				else if (gameState->difficulty == DIFFICULTY_MEDIUM ){
+					if (map->pos[i][j] == 13 && map->ledges[i][j].isIgnored) {
+						continue; // first aid kit being decreased
+					}
+				}
 				// init info
 				float px, py, pw, ph;
 				load_player_info(gameState, &px, &py, &pw, &ph);
@@ -63,7 +75,6 @@ void collision_detect_map(GameState* gameState, Map* map) {
 								Mix_PlayChannel(-1, gameState->soundEffects.spike, 0);
 							}
 							else {
-								// delay?
 								Mix_PlayChannel(-1, gameState->soundEffects.getDamaged, 0);
 							}
 						}

@@ -38,6 +38,7 @@ void load_background(GameState* gameState, SDL_Texture* texture[], const char fi
 }
 
 void load_game(GameState* gameState) {
+	srand(time(NULL));
 	TTF_Init();
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
 	Mix_Init(MIX_INIT_MP3);
@@ -69,15 +70,15 @@ void load_game(GameState* gameState) {
 	gameState->gigaGolem.pos.x = 0;
 	gameState->gigaGolem.pos.y = (HEIGHT_WINDOW-HEIGHT_GIGA_GOLEM) / 2.0;
 	if (gameState->difficulty == DIFFICULTY_EASY) {
-		gameState->player.lives = MAX_HEALTH_EASY;
+		gameState->player.lives = DIFFICULTY_EASY;
 	}
 	else if (gameState->difficulty == DIFFICULTY_MEDIUM) {
-		gameState->player.lives = MAX_HEALTH_MEDIUM;
+		gameState->player.lives = DIFFICULTY_MEDIUM;
 	} else if (gameState->difficulty == DIFFICULTY_HARD) {
-		gameState->player.lives = MAX_HEALTH_HARD;
+		gameState->player.lives = DIFFICULTY_HARD;
 	}
 	gameState->scrollX = 0;
-	gameState->map->counter = 0;
+	gameState->mapCounter = 0;
 	gameState->player.isTakenDamage = 0;
 	gameState->isOver = 0;
 	// Load images and create rendering pictures from them

@@ -26,7 +26,7 @@ void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) 
 			collision_detect_floor(gameState);
 
 			// detect map
-			for (int i = 0; i < gameState->map->counter; i++) {
+			for (int i = 0; i < gameState->mapCounter; i++) {
 				collision_detect_map(gameState, &gameState->map[i]);
 			}
 
@@ -329,4 +329,7 @@ void clean(GameState* gameState, SDL_Window* window) {
 	Mix_FreeChunk(gameState->soundEffects.landing);
 	Mix_FreeChunk(gameState->soundEffects.spike);
 	Mix_FreeMusic(gameState->soundTracks.inGame[0]);
+	Mix_FreeMusic(gameState->soundTracks.ending[0]);
+	Mix_FreeMusic(gameState->soundTracks.ending[1]);
+	Mix_FreeMusic(gameState->soundTracks.ending[2]);
 }

@@ -21,7 +21,7 @@ void do_render(GameState* gameState, int* done) {
 		// draw background
 		drawBackground(gameState);
 		// draw Map
-		for (int i = 0; i < gameState->map->counter; i++) {
+		for (int i = 0; i < gameState->mapCounter; i++) {
 			if (gameState->isKeyObtained && !gameState->flag) {
 				draw_key_map(gameState, 23);
 			}

@@ -1,0 +1,20 @@
+﻿  checkAccount.c
+C:\Users\Admin\source\repos\Jungle Run\checkAccount.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  collision_handling.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  help.c
+C:\Users\Admin\source\repos\Jungle Run\help.h(3,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  load.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  main.c
+C:\Users\Admin\source\repos\Jungle Run\menu.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  map.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  common_functions.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  menu.c
+C:\Users\Admin\source\repos\Jungle Run\menu.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  preGameplay.c
+C:\Users\Admin\source\repos\Jungle Run\preGameplay.h(3,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  render.c
+C:\Users\Admin\source\repos\Jungle Run\common_functions.h(4,10): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory

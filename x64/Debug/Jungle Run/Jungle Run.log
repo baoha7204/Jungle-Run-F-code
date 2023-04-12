@@ -1,13 +1,4 @@
-﻿  collision_handling.c
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(33,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(33,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(33,30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(33,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(34,24): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(34,27): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(34,30): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\collision_handling.c(34,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  common_functions.c
+﻿  common_functions.c
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(307,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[12]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(307,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(308,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[8]'
@@ -22,82 +13,5 @@ C:\Users\Admin\source\repos\Jungle Run\common_functions.c(314,37): warning C4047
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(314,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(315,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(315,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-  help.c
-C:\Users\Admin\source\repos\Jungle Run\help.c(251,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\help.c(175,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-  load.c
-  main.c
-  map.c
-C:\Users\Admin\source\repos\Jungle Run\map.c(325,54): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(325,78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,91): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,116): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(326,140): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,89): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,113): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(332,138): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(341,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(342,37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(343,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\map.c(369,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
-C:\Users\Admin\source\repos\Jungle Run\map.c(437,7): warning C4047: 'initializing': 'Map *' differs in levels of indirection from 'Map (*)[20]'
-  menu.c
-C:\Users\Admin\source\repos\Jungle Run\menu.c(124,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(130,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(136,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(142,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(148,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(154,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(177,33): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[6]'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(177,22): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\menu.c(44,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(274,17): warning C4098: 'loginDisplay': 'void' function returning a value
-C:\Users\Admin\source\repos\Jungle Run\menu.c(393,61): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(405,61): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(492,59): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\menu.c(584,61): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(596,61): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(680,59): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\menu.c(742,45): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(782,45): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(267,16): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(270,14): warning C4101: 'imageRect': unreferenced local variable
-C:\Users\Admin\source\repos\Jungle Run\menu.c(311,14): warning C4101: 'textRect2': unreferenced local variable
-C:\Users\Admin\source\repos\Jungle Run\menu.c(191,33): warning C4101: 'textSurface2': unreferenced local variable
-C:\Users\Admin\source\repos\Jungle Run\menu.c(300,14): warning C4101: 'textRect1': unreferenced local variable
-C:\Users\Admin\source\repos\Jungle Run\menu.c(192,33): warning C4101: 'textTexture2': unreferenced local variable
-C:\Users\Admin\source\repos\Jungle Run\menu.c(951,11): warning C4098: 'registerDisplay': 'void' function returning a value
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1085,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1093,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1194,25): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1292,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1300,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1396,25): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1495,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1503,30): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1598,27): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1660,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1668,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(945,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1853,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1787,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(2007,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(2020,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(2033,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(1922,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(2217,26): warning C4133: 'function': incompatible types - from 'Mix_Music *' to 'Mix_Chunk *'
-C:\Users\Admin\source\repos\Jungle Run\menu.c(2098,13): warning C4133: 'initializing': incompatible types - from 'Mix_Chunk *' to 'Mix_Music *'
-  preGameplay.c
-C:\Users\Admin\source\repos\Jungle Run\preGameplay.c(57,19): warning C4047: 'initializing': 'char' differs in levels of indirection from 'void *'
-  render.c
-C:\Users\Admin\source\repos\Jungle Run\render.c(65,59): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(65,99): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(68,43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(68,83): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(77,42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Jungle Run\render.c(77,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(105): warning C4715: 'processEvents': not all control paths return a value
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Debug\Jungle Run.exe
