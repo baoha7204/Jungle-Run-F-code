@@ -14,9 +14,8 @@ void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) 
 	// Load game
 	gameState->renderer = renderer;
 	load_game(gameState);
-	// Enter program loop
-	int done = 0;
-	while (!done) {
+	bool done;
+	do {
 		Uint64 currentFrameTime = SDL_GetTicks64();
 		Uint64 elapsedTime = currentFrameTime - lastFrameTime;
 		lastFrameTime = currentFrameTime;
@@ -37,12 +36,12 @@ void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) 
 			// Calculate and print framerate
 			gameState->dt = elapsedTime / 1000.0f;
 		}
-	}
+	} while (!done);	
 	// Close and destroy the window
 	clean(gameState, window);
 }
 
-int processEvents(SDL_Window* window, GameState* gameState) {
+bool processEvents(SDL_Window* window, GameState* gameState) {
 	// Walking
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 	if (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]) {
@@ -81,12 +80,12 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 				Mix_HaltMusic();
 				SDL_DestroyWindow(window);
 				window = NULL;
-				return 1;
+				return true;
 			}
 			break;
 		case SDL_QUIT:
 			Mix_HaltMusic();
-			return 1;
+			return true;
 		}
 		// Interact with keyboard
 		if (event.type == SDL_KEYDOWN) {
@@ -102,6 +101,7 @@ int processEvents(SDL_Window* window, GameState* gameState) {
 			}
 		}
 	}
+	return false;
 }
 
 void add_physics(GameState* gameState) {
