@@ -306,10 +306,10 @@ static int lv15[MAP_HEIGHT][MAP_WIDTH] = {
 };
 
 void loadMap(GameState* gameState, Map* map, int arr[][MAP_WIDTH], float x, float y);
-void drawMap(GameState* gameState, Map map[]);
-void drawLedges(GameState* gameState);
-void drawTilesMap(GameState* gameState, Map map, SDL_Rect srcRect, SDL_Texture* texture, int row, int col, double angle, int flip);
-void drawBackground(GameState* gameState);
+void drawMap(GameState* gameState, SDL_Renderer* renderer, Map map[]);
+void drawLedges(GameState* gameState, SDL_Renderer* renderer);
+void drawTilesMap(GameState* gameState, SDL_Renderer* renderer, Map map, SDL_Rect srcRect, SDL_Texture* texture, int row, int col, double angle, int flip);
+void drawBackground(GameState* gameState, SDL_Renderer* renderer);
 void drawMap_SingleplayerMode(GameState* gameState);
 void draw_key_map(GameState* gameState, int ledgeNumber);
 #endif

@@ -1,22 +1,21 @@
 ﻿  common_functions.c
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(34,25): warning C4133: 'function': incompatible types - from 'bool *' to 'int *'
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(307,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[12]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(306,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[12]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(306,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(307,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[8]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(307,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(308,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[8]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(308,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[4]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(308,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(309,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[4]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(309,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[6]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(309,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(310,40): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[6]'
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(310,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(312,52): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(312,46): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(314,37): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[1]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(311,52): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(311,46): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(313,37): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[1]'
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(313,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
+C:\Users\Admin\source\repos\Jungle Run\common_functions.c(314,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
 C:\Users\Admin\source\repos\Jungle Run\common_functions.c(314,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(315,41): warning C4047: 'function': 'SDL_Texture *' differs in levels of indirection from 'SDL_Texture *[3]'
-C:\Users\Admin\source\repos\Jungle Run\common_functions.c(315,30): warning C4024: 'SDL_DestroyTexture': different types for formal and actual parameter 1
   Generating code
-  4 of 62 functions ( 6.5%) were compiled, the rest were copied from previous compilation.
+  20 of 62 functions (32.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    6 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Jungle Run.vcxproj -> C:\Users\Admin\source\repos\Jungle Run\x64\Release\Jungle Run.exe

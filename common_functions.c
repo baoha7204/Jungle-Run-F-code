@@ -12,8 +12,7 @@ void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) 
 	// FPS
 	Uint64 lastFrameTime = 0;
 	// Load game
-	gameState->renderer = renderer;
-	load_game(gameState);
+	load_game(gameState, renderer);
 	bool done;
 	do {
 		Uint64 currentFrameTime = SDL_GetTicks64();
@@ -31,14 +30,14 @@ void gamePlay(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) 
 
 			add_physics(gameState);
 
-			do_render(gameState, &done);
+			do_render(gameState, renderer, &done);
 
-			// Calculate and print framerate
+			// Calculate framerate
 			gameState->dt = elapsedTime / 1000.0f;
 		}
 	} while (!done);	
 	// Close and destroy the window
-	clean(gameState, window);
+	clean(gameState, renderer, window);
 }
 
 bool processEvents(SDL_Window* window, GameState* gameState) {
@@ -164,8 +163,8 @@ int animation_smoothness(int frame, const int frames) {
 	return i;
 }
 
-void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
-	SDL_SetRenderTarget(gameState->renderer, texture);
+void onTrapHit(GameState* gameState, SDL_Renderer* renderer, SDL_Texture* texture, int x, int y) {
+	SDL_SetRenderTarget(renderer, texture);
 	// Set the color modulation to red
 	SDL_SetTextureColorMod(texture, 255, 0, 0);
 	// Render the texture to the renderer at the specified location
@@ -173,11 +172,11 @@ void onTrapHit(GameState* gameState, SDL_Texture* texture, int x, int y) {
 	SDL_QueryTexture(texture, NULL, NULL, &dstRect.w, &dstRect.h);
 	dstRect.w *= 2;
 	dstRect.h *= 2;
-	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
-	SDL_RenderPresent(gameState->renderer);
+	SDL_RenderCopyEx(renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
+	SDL_RenderPresent(renderer);
 	// Reset the color modulation to white
 	SDL_SetTextureColorMod(texture, 255, 255, 255);
-	SDL_RenderCopyEx(gameState->renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
+	SDL_RenderCopyEx(renderer, texture, NULL, &dstRect, 0, NULL, gameState->player.flip);
 }
 
 // bot golem detect player
@@ -232,7 +231,7 @@ int touchBoss(GameState* gameState) { // return true if touched, false if not to
 	return 0;
 }
 
-void Over(GameState* gameState, const char str[], SDL_Color fg, int* done) {
+void Over(GameState* gameState, SDL_Renderer* renderer, const char str[], SDL_Color fg, bool* done) {
 	Mix_HaltChannel(-1);
 	Mix_HaltChannel(1);
 	if (gameState->statusState == STATUS_STATE_GAMEOVER) {
@@ -252,30 +251,30 @@ void Over(GameState* gameState, const char str[], SDL_Color fg, int* done) {
 	}
 	// background 
 	for (int i = 0; i < 5; i++) {
-		SDL_RenderCopy(gameState->renderer, gameState->background[i].layer[0], NULL, NULL);
+		SDL_RenderCopy(renderer, gameState->background[i].layer[0], NULL, NULL);
 	}
 	gameState->font = NULL;
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\Kanit-Light.ttf", 108);
 	SDL_Rect textRect;
 	SDL_Surface* textSurface = TTF_RenderText_Solid(gameState->font, str, fg);
-	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(gameState->renderer, textSurface);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 	SDL_FreeSurface(textSurface);
 	SDL_QueryTexture(textTexture, NULL, NULL, &textRect.w, &textRect.h);
 	textRect.x = (WIDTH_WINDOW - textRect.w) / 2;
 	textRect.y = (HEIGHT_WINDOW - textRect.h) / 2;
-	SDL_RenderCopy(gameState->renderer, textTexture, NULL, &textRect);
+	SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 	// Display text: press R to retry, press X to return menu
 	float currentTime = SDL_GetTicks64() / 1000.0f;
 	if (currentTime - gameState->overTiming >= 2.0f) {
 		TTF_Font* informativeText = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 		SDL_Rect informativeRect;
 		textSurface = TTF_RenderText_Solid(informativeText, "Press R to retry, X to return menu", (SDL_Color) { 255, 255, 73, 255 });
-		SDL_Texture* informativeTexture = SDL_CreateTextureFromSurface(gameState->renderer, textSurface);
+		SDL_Texture* informativeTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 		SDL_FreeSurface(textSurface);
 		SDL_QueryTexture(informativeTexture, NULL, NULL, &informativeRect.w, &informativeRect.h);
 		informativeRect.x = 0;
 		informativeRect.y = -15;
-		SDL_RenderCopy(gameState->renderer, informativeTexture, NULL, &informativeRect);
+		SDL_RenderCopy(renderer, informativeTexture, NULL, &informativeRect);
 		// handle events
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
@@ -283,11 +282,11 @@ void Over(GameState* gameState, const char str[], SDL_Color fg, int* done) {
 			if (event.type == SDL_KEYDOWN) {
 				switch (event.key.keysym.sym) {
 				case SDLK_r: // retry
-					load_game(gameState);
+					load_game(gameState, renderer);
 					Mix_HaltMusic();
 					break;
 				case SDLK_x: // return menu
-					*done = 1;
+					*done = true;
 					Mix_HaltMusic();
 					break;
 				}
@@ -303,7 +302,7 @@ void immortal_events(GameState* gameState) {
 	}
 }
 
-void clean(GameState* gameState, SDL_Window* window) {
+void clean(GameState* gameState, SDL_Renderer* renderer, SDL_Window* window) {
 	SDL_DestroyTexture(gameState->idle_anim);
 	SDL_DestroyTexture(gameState->run_anim);
 	SDL_DestroyTexture(gameState->jump_anim);
@@ -321,7 +320,7 @@ void clean(GameState* gameState, SDL_Window* window) {
 	}
 	TTF_CloseFont(gameState->font);
 	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(gameState->renderer);
+	SDL_DestroyRenderer(renderer);
 	Mix_FreeChunk(gameState->soundEffects.electricHurt);
 	Mix_FreeChunk(gameState->soundEffects.getDamaged);
 	Mix_FreeChunk(gameState->soundEffects.ItemPickUp);

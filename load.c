@@ -6,7 +6,7 @@
 #include <time.h>
 #include <math.h>
 
-void load_texture(GameState* gameState, SDL_Texture* texture[], const char filePath[], int frame) {
+void load_texture(GameState* gameState, SDL_Renderer* renderer, SDL_Texture* texture[], const char filePath[], int frame) {
 	SDL_Surface* surface;
 	for (int i = 0; i < frame; i++) {
 		char str[128] = "";
@@ -17,12 +17,12 @@ void load_texture(GameState* gameState, SDL_Texture* texture[], const char fileP
 			exit(1);
 		}
 		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0, 0));
-		texture[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+		texture[i] = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
 	}
 }
 
-void load_background(GameState* gameState, SDL_Texture* texture[], const char filePath[], const int frame, int index) {
+void load_background(GameState* gameState, SDL_Renderer* renderer, SDL_Texture* texture[], const char filePath[], const int frame, int index) {
 	SDL_Surface* surface;
 	for (int i = 0; i < frame; i++) {
 		char str[128] = "";
@@ -32,12 +32,12 @@ void load_background(GameState* gameState, SDL_Texture* texture[], const char fi
 			SDL_Quit();
 			exit(1);
 		}
-		texture[i] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+		texture[i] = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
 	}
 }
 
-void load_game(GameState* gameState) {
+void load_game(GameState* gameState, SDL_Renderer* renderer) {
 	srand(time(NULL));
 	TTF_Init();
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
@@ -83,13 +83,13 @@ void load_game(GameState* gameState) {
 	gameState->isOver = 0;
 	// Load images and create rendering pictures from them
 	// Create character with Idle movement
-	load_texture(gameState, gameState->idle_anim, "Resource\\Character\\Idle\\Idle_%d.png", 12);
+	load_texture(gameState, renderer, gameState->idle_anim, "Resource\\Character\\Idle\\Idle_%d.png", 12);
 	// Create character with Run movement
-	load_texture(gameState, gameState->run_anim, "Resource\\Character\\Run\\Run_%d.png", 8);
+	load_texture(gameState, renderer, gameState->run_anim, "Resource\\Character\\Run\\Run_%d.png", 8);
 	// Create character with Jump movement
-	load_texture(gameState, gameState->jump_anim, "Resource\\Character\\Jump\\Jump_%d.png", 4);
+	load_texture(gameState, renderer, gameState->jump_anim, "Resource\\Character\\Jump\\Jump_%d.png", 4);
 	// Create golem
-	load_texture(gameState, gameState->golem, "Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png", 1);
+	load_texture(gameState, renderer, gameState->golem, "Resource\\Mecha-stone Golem 0.1\\PNG sheet\\Character_sheet.png", 1);
 	// Create background
 	SDL_Surface* surface;
 	for (int i = 0; i < 5; i++) {
@@ -113,30 +113,30 @@ void load_game(GameState* gameState) {
 		gameState->background[i].previousX = -WIDTH_WINDOW;
 		gameState->background[i].nextX = WIDTH_WINDOW;
 		// Create texture
-		load_background(gameState, gameState->background[i].layer, "Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", 3, i);
+		load_background(gameState, renderer, gameState->background[i].layer, "Resource\\Jungle Asset Pack\\parallax background\\plx-%d.png", 3, i);
 	}
 	// Create platform
-	load_texture(gameState, gameState->platform, "Resource\\Some Bullshit Platform\\Platform %d.png", 5);
+	load_texture(gameState, renderer, gameState->platform, "Resource\\Some Bullshit Platform\\Platform %d.png", 5);
 		// Platform[5]
 	surface = IMG_Load("Resource\\Jungle Asset Pack\\jungle tileset\\jungle tileset.png");
 	if (surface == NULL) {
 		SDL_Quit();
 		exit(1);
 	}
-	gameState->platform[5] = SDL_CreateTextureFromSurface(gameState->renderer, surface);
+	gameState->platform[5] = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
 	// Create fire trap
-	load_texture(gameState, gameState->fire_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Fire Trap\\PNGs\\Fire Trap - Level %d.png", 3);
+	load_texture(gameState, renderer, gameState->fire_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Fire Trap\\PNGs\\Fire Trap - Level %d.png", 3);
 	// Create ceiling trap
-	load_texture(gameState, gameState->ceiling_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Ceiling Trap\\PNGs\\Ceiling Trap - Level %d.png", 1);
+	load_texture(gameState, renderer, gameState->ceiling_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Ceiling Trap\\PNGs\\Ceiling Trap - Level %d.png", 1);
 	// Create saw trap
-	load_texture(gameState, gameState->saw_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Saw Trap\\PNGs\\Saw Trap - Level %d.png", 1);
+	load_texture(gameState, renderer, gameState->saw_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Saw Trap\\PNGs\\Saw Trap - Level %d.png", 1);
 	// Create lightning trap
-	load_texture(gameState, gameState->lightning_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Lightning Trap\\PNGs\\Lightning Trap - Level %d.png", 2);
+	load_texture(gameState, renderer, gameState->lightning_trap, "Resource\\Foozle_2DTR0001_Pixel_Trap_Pack\\Lightning Trap\\PNGs\\Lightning Trap - Level %d.png", 2);
 	// Create items
-	load_texture(gameState, gameState->items, "Resource\\platformer items\\animated_items.png", 1);
+	load_texture(gameState, renderer, gameState->items, "Resource\\platformer items\\animated_items.png", 1);
 	// Create sprakling star
-	load_texture(gameState, gameState->sparkling_star, "Resource\\sparkle\\sparkle.png", 1);
+	load_texture(gameState, renderer, gameState->sparkling_star, "Resource\\sparkle\\sparkle.png", 1);
 	// Load fonts
 	gameState->font = TTF_OpenFont("Resource\\Fonts\\crazy-pixel.ttf", 48);
 	if (!gameState->font) {

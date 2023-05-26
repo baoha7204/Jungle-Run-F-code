@@ -117,10 +117,8 @@ typedef struct {
 	// Sound
 	SoundEffect soundEffects;
 	Music soundTracks;
-	// Renderer
-	SDL_Renderer* renderer;
 	// Map
 	Map map[17];
 	int mapCounter; // number of maps created actually
 } GameState;
-#endif // !stucts
+#endif // !structs
